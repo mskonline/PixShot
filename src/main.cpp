@@ -5,6 +5,7 @@
 
 int main(int argc, char *argv[])
 {
+
     QApp *application = new QApp(argc, argv);
     application->setStyleSheet(APP_STYLE);
     application->addLibraryPath(LIB_PATH);
