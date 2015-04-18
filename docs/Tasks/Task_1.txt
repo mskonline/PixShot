@@ -1,0 +1,17 @@
+####################
+
+Opened : 2 May 2014
+
+Status : Open
+
+[TODO] - 2
+[DONE] - 1
+####################
+List 
+
+[TODO]
+-> Closing a pic doesn't check for changes done
+-> Selecting default font in preferences does not get saved
+
+[Done]
+-> Check for update fails

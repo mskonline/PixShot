@@ -1,0 +1,10 @@
+PixShot Setup :
+
+SVN URL : https://pixshot.googlecode.com/svn/trunk/
+
+
+Softwares Required :
+
+- Qt Toolkit
+- ResEdit
+- Dependency Walker (http://www.dependencywalker.com/)
