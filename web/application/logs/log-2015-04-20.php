@@ -1,0 +1,20 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+ERROR - 2015-04-20 03:11:50 --> 404 Page Not Found --> favicon.ico
+ERROR - 2015-04-20 19:28:46 --> 404 Page Not Found --> wp-login.php
+ERROR - 2015-04-20 19:28:48 --> 404 Page Not Found --> wp-login
+ERROR - 2015-04-20 19:28:50 --> 404 Page Not Found --> wordpress
+ERROR - 2015-04-20 19:28:50 --> 404 Page Not Found --> wp-admin
+ERROR - 2015-04-20 19:28:51 --> 404 Page Not Found --> site
+ERROR - 2015-04-20 19:28:51 --> 404 Page Not Found --> blog
+ERROR - 2015-04-20 19:28:51 --> 404 Page Not Found --> wp
+ERROR - 2015-04-20 19:28:52 --> 404 Page Not Found --> administrator
+ERROR - 2015-04-20 19:29:05 --> 404 Page Not Found --> wp-login.php
+ERROR - 2015-04-20 19:29:06 --> 404 Page Not Found --> wp-login
+ERROR - 2015-04-20 19:29:08 --> 404 Page Not Found --> wordpress
+ERROR - 2015-04-20 19:29:09 --> 404 Page Not Found --> wp-admin
+ERROR - 2015-04-20 19:29:10 --> 404 Page Not Found --> site
+ERROR - 2015-04-20 19:31:08 --> 404 Page Not Found --> site
+ERROR - 2015-04-20 19:31:08 --> 404 Page Not Found --> blog
+ERROR - 2015-04-20 19:31:09 --> 404 Page Not Found --> wp
+ERROR - 2015-04-20 19:31:09 --> 404 Page Not Found --> administrator

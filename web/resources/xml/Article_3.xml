@@ -1,0 +1,8 @@
+<article>
+	<id>3</id>
+	<title> Third Post </title>
+	<type> Blog</type>
+	<short_summary> Some short Summary</short_summary>
+	<content> Article 3 </content>
+	<publish_date> 2012-04-21</publish_date>
+</article>

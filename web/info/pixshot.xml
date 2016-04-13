@@ -1,0 +1,48 @@
+<pixshot>
+	<author>
+		<name>Sai Kumar Manakan</name>
+		<email>msk.mymails@gmail.com</email>
+		<website></website>
+	</author>
+	<contributors>
+		<contributor>
+			<name></name>
+			<email></email>
+			<website></website>
+		</contributor>
+	</contributors>
+	<years>2012</years>
+	<website>http://www.pixshot.org</website>
+	<license>
+		<type>GPL 2.0</type>
+		<url>http://www.gnu.org/licenses/gpl-2.0.html</url>
+	</license>
+	<sourcecode>
+		<url></url>
+	</sourcecode>
+	<versions>
+		<first>
+			<version></version>
+			<releasedate></releasedate>
+			<number>900</number>
+			<url></url>
+		</first>
+		<previous>
+			<version></version>
+			<releasedate></releasedate>
+			<url></url>
+		</previous>
+		<current>
+			<version>1.0</version>
+			<releasedate>31 Dec 2012</releasedate>
+			<number>1000</number>
+			<url>http://www.pixshot.org</url>
+		</current>
+		<next>
+			<version>1.1</version>
+			<releasedate></releasedate>
+			<number>1100</number>
+			<url></url>
+		</next>
+	</versions>
+</pixshot>

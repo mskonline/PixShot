@@ -1,0 +1,22 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+ERROR - 2015-09-02 13:49:04 --> 404 Page Not Found --> wp-login.php
+ERROR - 2015-09-02 13:49:08 --> 404 Page Not Found --> wp-login
+ERROR - 2015-09-02 13:49:09 --> 404 Page Not Found --> wordpress
+ERROR - 2015-09-02 13:49:10 --> 404 Page Not Found --> wp-admin
+ERROR - 2015-09-02 13:49:11 --> 404 Page Not Found --> section
+ERROR - 2015-09-02 13:49:12 --> 404 Page Not Found --> cms
+ERROR - 2015-09-02 13:49:13 --> 404 Page Not Found --> site
+ERROR - 2015-09-02 13:49:15 --> 404 Page Not Found --> blog
+ERROR - 2015-09-02 13:49:16 --> 404 Page Not Found --> admin
+ERROR - 2015-09-02 13:49:17 --> 404 Page Not Found --> wp
+ERROR - 2015-09-02 13:49:24 --> 404 Page Not Found --> wp-login.php
+ERROR - 2015-09-02 13:49:25 --> 404 Page Not Found --> wp-login
+ERROR - 2015-09-02 13:49:25 --> 404 Page Not Found --> wordpress
+ERROR - 2015-09-02 13:49:26 --> 404 Page Not Found --> wp-admin
+ERROR - 2015-09-02 13:49:27 --> 404 Page Not Found --> section
+ERROR - 2015-09-02 13:49:27 --> 404 Page Not Found --> cms
+ERROR - 2015-09-02 13:49:28 --> 404 Page Not Found --> site
+ERROR - 2015-09-02 13:49:29 --> 404 Page Not Found --> blog
+ERROR - 2015-09-02 13:49:29 --> 404 Page Not Found --> admin
+ERROR - 2015-09-02 13:49:31 --> 404 Page Not Found --> wp
