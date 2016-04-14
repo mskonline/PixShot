@@ -55,6 +55,7 @@ void CropItem::createTool()
     Form->setMaximumSize(QSize(174, 40));
     Form->setStyleSheet(QString::fromUtf8("QWidget {background-color: rgb(170, 170, 170);}\n"
         "QPushButton{background-color:none;}"));
+
     pb_crop = new QPushButton(Form);
     pb_crop->setText("Crop");
     pb_crop->setGeometry(QRect(10, 10, 75, 23));
@@ -70,11 +71,12 @@ void CropItem::createTool()
     pb_cancel->setIcon(icon1);
     pb_cancel->setIconSize(QSize(14, 16));
 
-    connect(pb_crop,SIGNAL(released()),this,SLOT(emitCrop()));
-    connect(pb_cancel,SIGNAL(released()),this,SLOT(emitCancel()));
+    connect(pb_crop,SIGNAL(pressed()),this,SLOT(emitCrop()));
+    connect(pb_cancel,SIGNAL(pressed()),this,SLOT(emitCancel()));
 
     panel = scene->addWidget(Form);
     panel->setPos(epoint);
+    panel->setZValue(this->zValue() + 10);
 }
 
 void CropItem::emitCancel()

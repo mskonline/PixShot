@@ -112,6 +112,7 @@ public slots:
     void setUpNewPix(int);
     void pixmapEdited(bool);
     void setActivePixmap(int);
+    void enablePasteOption();
     void checkForUpdates();
     void openWebsite();
     void switchTab();

@@ -12,6 +12,7 @@
 #include <QDesktopWidget>
 #include <QDesktopServices>
 #include <QMessageBox>
+#include <QMimeData>
 #include <QMatrix>
 #include <qmath.h>
 
@@ -70,8 +71,8 @@ void Interface::init()
     this->actionCopy->setDisabled(true);
     this->actionPrint->setDisabled(true);
 
-    // Register Hotkey
-    RegisterHotKey(this->winId(),100,0,VK_SNAPSHOT);
+    // Register Hotkey - TODO
+    // RegisterHotKey(this->winId(),100,0,VK_SNAPSHOT);
 }
 
 void Interface::setUpTabBar()
@@ -191,6 +192,10 @@ void Interface::showUp()
         this->show();
     else
         this->showMaximized();
+}
+
+void Interface::enablePasteOption(){
+    this->actionPaste->setEnabled(true);
 }
 
 void Interface::createNew()
@@ -634,14 +639,15 @@ void Interface::dragLeaveEvent(QDragLeaveEvent *event)
 
 void Interface::dropEvent(QDropEvent *event)
 {
-    if(event->mimeData()->hasImage())
+    const QMimeData *md = event->mimeData();
+    if(md->hasImage())
     {
-        QImage img = qvariant_cast<QImage>(event->mimeData()->imageData());
+        QImage img = qvariant_cast<QImage>(md->imageData());
         this->setPixmap(QPixmap::fromImage(img));
     }
-    else if(event->mimeData()->hasUrls())
+    else if(md->hasUrls())
     {
-        QList<QUrl> lt = event->mimeData()->urls();
+        QList<QUrl> lt = md->urls();
 
         try {
             if(!lt.isEmpty()) {
@@ -664,14 +670,15 @@ void Interface::releaseCtrl()
 }
 
 void Interface::resetCursor()
-{    
-    this->toolButton->setExclusive(false);
+{
 
-    this->pb_crop->setChecked(false);
-    this->pb_Rectangle->setChecked(true);
-    this->selectObject(RECTANGLE);
+    //this->toolButton->setExclusive(false);
 
-    this->toolButton->setExclusive(true);
+    //this->pb_crop->setChecked(false);
+    this->pb_Pointer->setChecked(true);
+    this->selectObject(POINTER);
+
+    //this->toolButton->setExclusive(true);
 }
 
 void Interface::captureRegion()

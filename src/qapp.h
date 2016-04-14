@@ -1,7 +1,7 @@
 #ifndef QAPP_H
 #define QAPP_H
 
-#include <QtGui/QApplication>
+#include <QApplication>
 #include <windows.h>
 
 class QApp : public QApplication

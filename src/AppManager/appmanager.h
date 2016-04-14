@@ -26,6 +26,7 @@ private:
     void loadModules();
     void close();
     void setConnections();
+    void checkClipboardforImages();
 
 public slots:
 

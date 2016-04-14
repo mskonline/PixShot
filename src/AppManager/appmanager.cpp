@@ -1,6 +1,7 @@
 #include "appmanager.h"
 #include <QDebug>
 #include <QFile>
+#include <QMimeData>
 #include <QMessageBox>
 
 AppManager::AppManager()
@@ -66,6 +67,25 @@ void AppManager::createInterface()
         preferences->trayOnStart ? interface->hide() : interface->showMaximized();
     else
         interface->showMaximized();
+
+    this->checkClipboardforImages();
+}
+
+void AppManager::checkClipboardforImages()
+{
+    // Check if the clipboard has any images
+    try
+    {
+        const QMimeData *mimeData = QApplication::clipboard()->mimeData();
+
+        if(mimeData->hasImage()){
+            interface->enablePasteOption();
+        }
+    }
+    catch(...)
+    {
+        // Paste option set to be disabled
+    }
 }
 
 void AppManager::activateRegionCapture()

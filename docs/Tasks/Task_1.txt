@@ -1,17 +1,25 @@
 ####################
 
 Opened : 2 May 2014
-
+Modified : 23 Dec 2015
 Status : Open
 
 [TODO] - 2
-[DONE] - 1
+[WIP] - 1
+[DONE] - 4
 ####################
 List 
 
 [TODO]
+
 -> Closing a pic doesn't check for changes done
 -> Selecting default font in preferences does not get saved
 
+[WIP]
+
+
 [Done]
+-> Crop item buttons
+-> Escape button press on the image
 -> Check for update fails
+-> 'paste' option enabled while startup even when no image is available in clipboard

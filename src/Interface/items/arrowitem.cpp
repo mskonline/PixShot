@@ -14,12 +14,12 @@ ArrowItem::ArrowItem(QGraphicsItem *parent)
 
 void ArrowItem::undo()
 {
-    this->setVisible(FALSE);
+    this->setVisible(0);
 }
 
 void ArrowItem::redo()
 {
-    this->setVisible(TRUE);
+    this->setVisible(1);
 }
 
 void ArrowItem::setOptions(ItemProperties *prop)

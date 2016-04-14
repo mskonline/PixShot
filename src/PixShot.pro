@@ -1,7 +1,7 @@
 # -------------------------------------------------
 # Project created by QtCreator 2012-01-14T23:04:21
 # -------------------------------------------------
-QT += network xml
+QT += widgets network xml printsupport
 TARGET = PixShot
 TEMPLATE = app
 SOURCES += main.cpp \

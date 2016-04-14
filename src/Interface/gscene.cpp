@@ -108,8 +108,14 @@ void GScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     if(DRAW_MODE)
     {
         /* One item at Once */
-        if(this->OBJECT_TYPE == CROP)
+        if(this->OBJECT_TYPE == CROP){
             DRAW_MODE = false;
+            this->update();
+
+            QGraphicsScene::mouseReleaseEvent(event);
+            emit resetCursor();
+            return;
+        }
     }
 
     QList<QGraphicsItem *> itmList = this->selectedItems();
@@ -159,12 +165,12 @@ void GScene::keyReleaseEvent(QKeyEvent *keyEvent)
         case Qt::Key_Escape:
             this->DRAW_MODE = false;
             if(item)
-            {
-                this->removeItem(item);
+            {                
                 if(this->OBJECT_TYPE == CROP)
                 {
                     CropItem *t = dynamic_cast<CropItem *> (item);
                     this->removeItem(t->panel);
+                    this->removeItem(item);
                 }
             }
             emit resetCursor();
@@ -419,8 +425,7 @@ void GScene::cropImage()
     this->removeItem(t->panel);
     this->removeItem(t);
 
-    if(t)
-        delete t;
+    if(t) delete t;
 
     emit resetCursor();
 
