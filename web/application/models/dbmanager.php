@@ -1,15 +1,15 @@
 <?php 
 
-class DBManager extends CI_MODEL {
+class Dbmanager extends CI_MODEL {
 	
-	var $currentVersion  = "1.0";
+	var $currentVersion  = "0.9";
 
 	public function __construct() {
 	
+		parent::__construct();
 		$this->load->database();
 		$this->load->helper('date');
 	}
-
 	
 	public function incrementDownloadCount($version) {
 	
@@ -50,7 +50,7 @@ class DBManager extends CI_MODEL {
 
 			$db = $this->db;
 			$db->select('totaldownloads');
-			$db->where('version',$this->currentVersion);
+			$db->where('version', $this->currentVersion);
 			$db->from('downloads');
 			$query = $db->get();
 
@@ -58,9 +58,7 @@ class DBManager extends CI_MODEL {
 				throw new Exception('error in retrieving count');
 			else
 			{
-				//print_r($query->result_array());
 				return $query->result_array();
-			
 			}
 				
 		} catch (Exception $exp) {

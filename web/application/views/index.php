@@ -7,7 +7,7 @@
 		<meta name="keywords" content="Image annotation, Screenshot, Capture">
 		<meta name="author" content="Sai Kumar M">
 		<meta name="contact" content="saikumar.manakan@gmail.com">
-		<meta name="last-modified" content="1410810796517">
+		<meta name="last-modified" content="1460607693590">
         <title>PixShot</title>
 		<link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="./resources/css/ext-all.css">
