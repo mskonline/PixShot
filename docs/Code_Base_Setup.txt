@@ -8,3 +8,4 @@ Softwares Required :
 - Qt Toolkit
 - ResEdit
 - Dependency Walker (http://www.dependencywalker.com/)
+- Inno Setup Tool
