@@ -5,67 +5,67 @@ QT += widgets network xml printsupport
 TARGET = PixShot
 TEMPLATE = app
 SOURCES += main.cpp \
-    AppManager/appmanager.cpp \
-    Interface/interface.cpp \
-    Interface/gscene.cpp \
-    Interface/items/rectitem.cpp \
-    Interface/items/baseitem.cpp \
-    Interface/toolbox.cpp \
-    Interface/items/circleItem.cpp \
-    Interface/items/arrowitem.cpp \
-    Interface/itemsettings.cpp \
-    Interface/items/textitem.cpp \
-    Interface/items/cropitem.cpp \
-    Interface/items/highlighteritem.cpp \
-    Interface/regioncapturescene.cpp \
-    Interface/items/regionselectitem.cpp \
-    Interface/about.cpp \
-    Preferences/preferences.cpp \
-    Interface/PreferenceInterface.cpp \
-    Interface/filenameprompt.cpp \
-    Interface/gpixmap.cpp \
-    Interface/newpixwidget.cpp \
-    Interface/widgets/updatechecker.cpp \
+    appmanager/appmanager.cpp \
+    interface/interface.cpp \
+    interface/gscene.cpp \
+    interface/items/rectitem.cpp \
+    interface/items/baseitem.cpp \
+    interface/toolbox.cpp \
+    interface/items/circleItem.cpp \
+    interface/items/arrowitem.cpp \
+    interface/itemsettings.cpp \
+    interface/items/textitem.cpp \
+    interface/items/cropitem.cpp \
+    interface/items/highlighteritem.cpp \
+    interface/regioncapturescene.cpp \
+    interface/items/regionselectitem.cpp \
+    interface/about.cpp \
+    preferences/preferences.cpp \
+    interface/PreferenceInterface.cpp \
+    interface/filenameprompt.cpp \
+    interface/gpixmap.cpp \
+    interface/newpixwidget.cpp \
+    interface/widgets/updatechecker.cpp \
     qapp.cpp \
-    Interface/widgets/actionwidget.cpp \
-    Interface/gaction.cpp
+    interface/widgets/actionwidget.cpp \
+    interface/gaction.cpp
 
-HEADERS += AppManager/appmanager.h \
-    Interface/interface.h \
-    Interface/gscene.h \
-    Interface/items/rectitem.h \
-    Interface/items/baseitem.h \
-    Interface/toolbox.h \
-    Interface/items/circleItem.h \
-    Commons/commons.h \
-    Interface/items/arrowitem.h \
-    Interface/ItemSettings.h \
-    Interface/items/textitem.h \
-    Interface/items/cropitem.h \
-    Interface/items/highlighteritem.h \
-    Interface/regioncapturescene.h \
-    Interface/items/regionselectitem.h \
-    Interface/about.h \
-    Preferences/preferences.h \
-    Interface/PreferenceInterface.h \
-    Interface/filenameprompt.h \
-    Interface/gpixmap.h \
-    Interface/newpixwidget.h \
-    Interface/widgets/updatechecker.h \
+HEADERS += appmanager/appmanager.h \
+    interface/interface.h \
+    interface/gscene.h \
+    interface/items/rectitem.h \
+    interface/items/baseitem.h \
+    interface/toolbox.h \
+    interface/items/circleItem.h \
+    commons/commons.h \
+    interface/items/arrowitem.h \
+    interface/ItemSettings.h \
+    interface/items/textitem.h \
+    interface/items/cropitem.h \
+    interface/items/highlighteritem.h \
+    interface/regioncapturescene.h \
+    interface/items/regionselectitem.h \
+    interface/about.h \
+    preferences/preferences.h \
+    interface/PreferenceInterface.h \
+    interface/filenameprompt.h \
+    interface/gpixmap.h \
+    interface/newpixwidget.h \
+    interface/widgets/updatechecker.h \
     qapp.h \
-    Interface/widgets/actionwidget.h \
-    Interface/gaction.h
+    interface/widgets/actionwidget.h \
+    interface/gaction.h
 win32:UI_DIR = temp/ui
-FORMS += Interface/interface.ui \
-    Interface/itemsettings.ui \
-    Interface/toolbox.ui \
-    Interface/croppanel.ui \
-    Interface/about.ui \
-    Preferences/preferences.ui \
-    Interface/filenameprompt.ui \
-    Interface/newpixwidget.ui \
-    Interface/widgets/updatechecker.ui \
-    Interface/widgets/actionwidget.ui
+FORMS += interface/interface.ui \
+    interface/itemsettings.ui \
+    interface/toolbox.ui \
+    interface/croppanel.ui \
+    interface/about.ui \
+    preferences/preferences.ui \
+    interface/filenameprompt.ui \
+    interface/newpixwidget.ui \
+    interface/widgets/updatechecker.ui \
+    interface/widgets/actionwidget.ui
 win32:MOC_DIR = temp/moc
 win32:OBJECTS_DIR = temp/obj
 win32:RC_FILE = Resources/pixshot.rc

@@ -13,8 +13,8 @@
 #include "gscene.h"
 #include "regioncapturescene.h"
 #include "ItemSettings.h"
-#include "../Preferences/preferences.h"
-#include "../Commons/commons.h"
+#include "../preferences/preferences.h"
+#include "../commons/commons.h"
 #include "newpixwidget.h"
 #include "widgets/actionwidget.h"
 

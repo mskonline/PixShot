@@ -1,5 +1,5 @@
-#include "AppManager/appmanager.h"
-#include "Commons/commons.h"
+#include "appmanager/appmanager.h"
+#include "commons/commons.h"
 #include "qapp.h"
 #include <QSharedMemory>
 

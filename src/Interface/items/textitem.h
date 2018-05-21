@@ -3,7 +3,7 @@
 
 #include <QGraphicsTextItem>
 #include <QGraphicsSceneMouseEvent>
-#include "../../Commons/commons.h"
+#include "../../commons/commons.h"
 
 class TextItem : public QGraphicsTextItem
 {

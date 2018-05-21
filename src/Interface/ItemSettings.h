@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include "ui_itemsettings.h"
-#include "../Commons/commons.h"
+#include "../commons/commons.h"
 
 namespace Ui {
     class ItemSettings;

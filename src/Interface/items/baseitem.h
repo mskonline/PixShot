@@ -3,7 +3,7 @@
 
 #include <QGraphicsItem>
 #include <QUndoCommand>
-#include "../../Commons/commons.h"
+#include "../../commons/commons.h"
 
 class BaseItem : public QGraphicsItem, public QObject
 {

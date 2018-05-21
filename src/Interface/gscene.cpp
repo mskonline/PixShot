@@ -14,6 +14,7 @@
 
 GScene::GScene(ItemProperties *prop)
 {
+    // Initialize
     DRAW_MODE = false;
     this->OBJECT_TYPE = RECTANGLE;
     this->prop = prop;

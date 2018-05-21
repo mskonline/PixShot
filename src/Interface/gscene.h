@@ -14,7 +14,7 @@
 #include "items/textitem.h"
 #include "items/cropitem.h"
 #include "items/highlighteritem.h"
-#include "../Commons/commons.h"
+#include "../commons/commons.h"
 
 class GScene : public QGraphicsScene
 {

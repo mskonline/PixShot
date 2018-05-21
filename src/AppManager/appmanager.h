@@ -3,9 +3,9 @@
 
 #include <QClipboard>
 
-#include "../Interface/interface.h"
-#include "../Preferences/preferences.h"
-#include "../Commons/commons.h"
+#include "../interface/interface.h"
+#include "../preferences/preferences.h"
+#include "../commons/commons.h"
 
 class AppManager: public QObject
 {

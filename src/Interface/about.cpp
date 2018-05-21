@@ -1,6 +1,6 @@
 #include "about.h"
 #include "ui_about.h"
-#include "../Commons/commons.h"
+#include "../commons/commons.h"
 
 About::About(QWidget *parent) :
     QWidget(parent,Qt::Window | Qt::WindowCloseButtonHint)

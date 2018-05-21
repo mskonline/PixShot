@@ -1,5 +1,5 @@
 #include "preferences.h"
-#include "../Commons/commons.h"
+#include "../commons/commons.h"
 #include <QDate>
 #include <QDebug>
 

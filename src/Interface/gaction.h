@@ -2,7 +2,7 @@
 #define GACTION_H
 
 #include <QGraphicsItem>
-#include "../Commons/commons.h"
+#include "../commons/commons.h"
 
 class GAction {
 

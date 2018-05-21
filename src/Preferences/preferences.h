@@ -1,7 +1,7 @@
 #ifndef PREFERENCES_H
 #define PREFERENCES_H
 
-#include "../Interface/PreferenceInterface.h"
+#include "../interface/PreferenceInterface.h"
 #include <QSettings>
 
 
