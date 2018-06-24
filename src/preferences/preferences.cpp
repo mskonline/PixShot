@@ -204,7 +204,7 @@ void Preferences::createDefault(QString filename)
     settings.setValue("interfaceBGColor","#808080");
     settings.setValue("toTrayOnClose",true);
     settings.setValue("trayIcon",true);
-    settings.setValue("trayOnStart",true);
+    settings.setValue("trayOnStart",false);
     settings.setValue("updateOnStart",false);
     settings.endGroup();
     settings.sync();

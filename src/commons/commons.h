@@ -69,19 +69,19 @@ public :
 
     ItemProperties()
     {
-        itemColor = QColor(Qt::black);
-        fontColor = QColor(Qt::black);
+        itemColor = QColor(Qt::red);
+        fontColor = QColor(Qt::red);
         itemPen = QPen(itemColor);
         itemPen.setWidth(initialPenWidth);
         itemBrush = QBrush(itemColor,Qt::NoBrush);
     }
 
-    void setProperties(QColor c, QPen p, QBrush b, QColor fc)
+    void setProperties(QColor color, QPen pen, QBrush brush, QColor fontColor)
     {
-        itemColor = c;
-        fontColor = fc;
-        itemPen = p;
-        itemBrush = b;
+        itemColor = color;
+        fontColor = fontColor;
+        itemPen = pen;
+        itemBrush = brush;
     }
 };
 

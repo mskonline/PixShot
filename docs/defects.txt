@@ -1,5 +1,0 @@
-defects :
-
-- region capture doesnt work
-- crop arrow pops up untimely
-- text item font
