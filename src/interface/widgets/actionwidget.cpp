@@ -53,6 +53,7 @@ void ActionWidget::keyReleaseEvent(QKeyEvent *keyEvent)
 void ActionWidget::closeEvent(QCloseEvent *)
 {
     this->hide();
+    emit action(-1);
 }
 
 ActionWidget::~ActionWidget()
