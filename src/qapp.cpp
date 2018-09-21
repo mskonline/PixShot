@@ -4,6 +4,7 @@ QApp::QApp(int argc, char *argv[]): QApplication(argc,argv)
 {
 }
 
+#if defined (Q_OS_WIN)
 bool QApp::winEventFilter(MSG * msg, long * result)
 {
     switch(msg->message)
@@ -15,6 +16,7 @@ bool QApp::winEventFilter(MSG * msg, long * result)
 
     return(false);
 }
+#endif
 
 QApp::~QApp()
 {

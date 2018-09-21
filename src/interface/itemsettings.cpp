@@ -1,4 +1,4 @@
-#include "ItemSettings.h"
+#include "itemsettings.h"
 #include <QPainter>
 #include <QColorDialog>
 #include <QFontDialog>

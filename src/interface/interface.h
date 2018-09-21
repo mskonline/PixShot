@@ -12,7 +12,7 @@
 #include "ui_interface.h"
 #include "gscene.h"
 #include "regioncapturescene.h"
-#include "ItemSettings.h"
+#include "itemsettings.h"
 #include "../preferences/preferences.h"
 #include "../commons/commons.h"
 #include "newpixwidget.h"

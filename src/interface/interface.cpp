@@ -16,7 +16,9 @@
 #include <QMatrix>
 #include <qmath.h>
 
+#if defined (Q_OS_WIN)
 #include <windows.h>
+#endif
 
 Interface::Interface(Preferences *preferences)
 {
@@ -85,7 +87,11 @@ void Interface::setUpTabBar()
     hLayout->addWidget(tabBar);
 
     tabBar->setMinimumWidth(35);
+#if defined (Q_OS_WIN)
     tabBar->setTabsClosable(TRUE);
+#elif defined (Q_OS_LINUX)
+    tabBar->setTabsClosable(true);
+#endif
     tabBar->setExpanding(false);
     tabBar->setElideMode(Qt::ElideRight);
 

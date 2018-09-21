@@ -11,7 +11,7 @@ SOURCES += main.cpp \
     interface/items/rectitem.cpp \
     interface/items/baseitem.cpp \
     interface/toolbox.cpp \
-    interface/items/circleItem.cpp \
+    interface/items/circleitem.cpp \
     interface/items/arrowitem.cpp \
     interface/itemsettings.cpp \
     interface/items/textitem.cpp \
@@ -36,10 +36,10 @@ HEADERS += appmanager/appmanager.h \
     interface/items/rectitem.h \
     interface/items/baseitem.h \
     interface/toolbox.h \
-    interface/items/circleItem.h \
+    interface/items/circleitem.h \
     commons/commons.h \
     interface/items/arrowitem.h \
-    interface/ItemSettings.h \
+    interface/itemsettings.h \
     interface/items/textitem.h \
     interface/items/cropitem.h \
     interface/items/highlighteritem.h \
