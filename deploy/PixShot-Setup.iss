@@ -4,7 +4,7 @@
 AppName=PixShot 0.9
 AppVersion=0.9
 AppVerName=PixShot 0.9
-AppCopyright=Copyright (C) 2014, PixShot.org
+AppCopyright=Copyright (C) 2014 - 2019, PixShot.org
 AppContact=support@pixshot.org
 AppPublisher=pixshot.org
 AppPublisherURL=http://www.pixshot.org
@@ -29,7 +29,7 @@ UsePreviousAppDir=yes
 ;WizardImageFile=pixshot.bmp
  
 [Files]
-Source: "../src/release/PixShot.exe"; DestDir: "{app}"
+Source: "../build/release/PixShot.exe"; DestDir: "{app}"
 Source: "QtCore4.dll"; DestDir: "{app}"
 Source: "QtGui4.dll"; DestDir: "{app}"
 Source: "QtNetwork4.dll"; DestDir: "{app}"

@@ -10,7 +10,7 @@
 #include <QShortcut>
 #include <QSystemTrayIcon>
 #include "ui_interface.h"
-#include "gscene.h"
+#include "../graphics/gscene.h"
 #include "regioncapturescene.h"
 #include "itemsettings.h"
 #include "../preferences/preferences.h"

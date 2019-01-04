@@ -60,8 +60,8 @@ void Interface::init()
     gscene = new GScene(itemProperties);
     QBrush brush(preferences->interfaceBGColor);
     brush.setStyle(Qt::SolidPattern);
-    this->graphicsView->setBackgroundBrush(brush);
 
+    this->graphicsView->setBackgroundBrush(brush);
     this->graphicsView->setScene(gscene);
 
     img = NULL;
@@ -87,11 +87,11 @@ void Interface::setUpTabBar()
     hLayout->addWidget(tabBar);
 
     tabBar->setMinimumWidth(35);
-#if defined (Q_OS_WIN)
+    #if defined (Q_OS_WIN)
     tabBar->setTabsClosable(TRUE);
-#elif defined (Q_OS_LINUX)
+    #elif defined (Q_OS_LINUX)
     tabBar->setTabsClosable(true);
-#endif
+    #endif
     tabBar->setExpanding(false);
     tabBar->setElideMode(Qt::ElideRight);
 

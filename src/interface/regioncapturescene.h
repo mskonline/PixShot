@@ -6,7 +6,7 @@
 #include <QKeyEvent>
 #include <QPixmap>
 
-#include "items/regionselectitem.h"
+#include "../graphics/items/regionselectitem.h"
 
 class RegionCaptureScene : public QGraphicsScene
 {

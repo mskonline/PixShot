@@ -7,54 +7,54 @@ TEMPLATE = app
 SOURCES += main.cpp \
     appmanager/appmanager.cpp \
     interface/interface.cpp \
-    interface/gscene.cpp \
-    interface/items/rectitem.cpp \
-    interface/items/baseitem.cpp \
+    graphics/gscene.cpp \
+    graphics/items/rectitem.cpp \
+    graphics/items/baseitem.cpp \
     interface/toolbox.cpp \
-    interface/items/circleitem.cpp \
-    interface/items/arrowitem.cpp \
+    graphics/items/circleitem.cpp \
+    graphics/items/arrowitem.cpp \
     interface/itemsettings.cpp \
-    interface/items/textitem.cpp \
-    interface/items/cropitem.cpp \
-    interface/items/highlighteritem.cpp \
+    graphics/items/textitem.cpp \
+    graphics/items/cropitem.cpp \
+    graphics/items/highlighteritem.cpp \
     interface/regioncapturescene.cpp \
-    interface/items/regionselectitem.cpp \
+    graphics/items/regionselectitem.cpp \
     interface/about.cpp \
     preferences/preferences.cpp \
     interface/PreferenceInterface.cpp \
     interface/filenameprompt.cpp \
-    interface/gpixmap.cpp \
+    graphics/gpixmap.cpp \
     interface/newpixwidget.cpp \
     interface/widgets/updatechecker.cpp \
     qapp.cpp \
     interface/widgets/actionwidget.cpp \
-    interface/gaction.cpp
+    graphics/gaction.cpp
 
 HEADERS += appmanager/appmanager.h \
     interface/interface.h \
-    interface/gscene.h \
-    interface/items/rectitem.h \
-    interface/items/baseitem.h \
+    graphics/gscene.h \
+    graphics/items/rectitem.h \
+    graphics/items/baseitem.h \
     interface/toolbox.h \
-    interface/items/circleitem.h \
+    graphics/items/circleitem.h \
     commons/commons.h \
-    interface/items/arrowitem.h \
+    graphics/items/arrowitem.h \
     interface/itemsettings.h \
-    interface/items/textitem.h \
-    interface/items/cropitem.h \
-    interface/items/highlighteritem.h \
+    graphics/items/textitem.h \
+    graphics/items/cropitem.h \
+    graphics/items/highlighteritem.h \
     interface/regioncapturescene.h \
-    interface/items/regionselectitem.h \
+    graphics/items/regionselectitem.h \
     interface/about.h \
     preferences/preferences.h \
     interface/PreferenceInterface.h \
     interface/filenameprompt.h \
-    interface/gpixmap.h \
+    graphics/gpixmap.h \
     interface/newpixwidget.h \
     interface/widgets/updatechecker.h \
     qapp.h \
     interface/widgets/actionwidget.h \
-    interface/gaction.h
+    graphics/gaction.h
 win32:UI_DIR = temp/ui
 FORMS += interface/interface.ui \
     interface/itemsettings.ui \

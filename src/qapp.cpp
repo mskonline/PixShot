@@ -2,6 +2,7 @@
 
 QApp::QApp(int argc, char *argv[]): QApplication(argc,argv)
 {
+    // do nothing
 }
 
 #if defined (Q_OS_WIN)
