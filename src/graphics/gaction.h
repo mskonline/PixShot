@@ -6,7 +6,7 @@
 
 class GAction {
 
-   public:
+public:
     GAction();
 
     QGraphicsItem *item;

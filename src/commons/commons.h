@@ -9,6 +9,7 @@
 
 #define ZERO 0
 #define NORMAL_RUN 0
+#define ABNORMAL_RUN -1
 #define APP_NAME "PixShot"
 #define APP_VERSION "0.1"
 #define APP_WEBSITE "http://www.pixshot.org"

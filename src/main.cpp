@@ -3,10 +3,16 @@
 #include "qapp.h"
 #include <QSharedMemory>
 
-
+/**
+ *
+ *
+ * @brief qMain
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main(int argc, char *argv[])
 {
-
     QApp *application = new QApp(argc, argv);
     application->setStyleSheet(APP_STYLE);
     application->addLibraryPath(LIB_PATH);
@@ -21,7 +27,7 @@ int main(int argc, char *argv[])
     app = new AppManager();
     app->init();
 
-    QObject::connect(application,SIGNAL(activateRegionCapture()),app,SLOT(activateRegionCapture()));
+    QObject::connect(application, SIGNAL(activateRegionCapture()), app, SLOT(activateRegionCapture()));
 
     if(application->exec() == NORMAL_RUN)
     {
@@ -29,5 +35,7 @@ int main(int argc, char *argv[])
         return NORMAL_RUN;
     }
     else
-        return -1;
+    {
+        return ABNORMAL_RUN;
+    }
 }

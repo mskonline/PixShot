@@ -60,6 +60,12 @@ QVariant ArrowItem::itemChange(GraphicsItemChange change, const QVariant &value)
     return QGraphicsItem::itemChange(change,value);
 }
 
+/**
+ * @brief ArrowItem::paint Overriding the paint function to draw the arrow
+ * @param painter QPainter ptr
+ * @param option QStyleOptionGraphicsItem ptr
+ * @param widget QWidget ptr
+ */
 void ArrowItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->setPen(pen);

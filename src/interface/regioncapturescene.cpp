@@ -5,7 +5,7 @@ RegionCaptureScene::RegionCaptureScene(QPixmap pix)
 {
     pixItem = new QGraphicsPixmapItem(pix);
     this->addItem(pixItem);
-    this->item = NULL;
+    this->item = nullptr;
 }
 
 void RegionCaptureScene::mousePressEvent(QGraphicsSceneMouseEvent *event)

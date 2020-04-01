@@ -7,6 +7,9 @@
 #include "../preferences/preferences.h"
 #include "../commons/commons.h"
 
+/**
+ * @brief The AppManager class
+ */
 class AppManager: public QObject
 {
     Q_OBJECT
@@ -22,7 +25,7 @@ private:
     Interface *interface;
     Preferences *preferences;
 
-    void createInterface();
+    void loadInterface();
     void loadModules();
     void close();
     void setConnections();

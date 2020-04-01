@@ -24,8 +24,8 @@
    </property>
    <property name="font">
     <font>
-     <family>Calibri</family>
-     <pointsize>13</pointsize>
+     <family>Arial</family>
+     <pointsize>10</pointsize>
      <weight>50</weight>
      <bold>false</bold>
      <stylestrategy>PreferAntialias</stylestrategy>
@@ -46,8 +46,8 @@
    </property>
    <property name="font">
     <font>
-     <family>Calibri</family>
-     <pointsize>13</pointsize>
+     <family>Arial</family>
+     <pointsize>10</pointsize>
      <stylestrategy>PreferAntialias</stylestrategy>
     </font>
    </property>
@@ -66,8 +66,8 @@
    </property>
    <property name="font">
     <font>
-     <family>Calibri</family>
-     <pointsize>13</pointsize>
+     <family>Arial</family>
+     <pointsize>10</pointsize>
      <stylestrategy>PreferAntialias</stylestrategy>
     </font>
    </property>
@@ -119,17 +119,18 @@
     <rect>
      <x>10</x>
      <y>17</y>
-     <width>191</width>
+     <width>251</width>
      <height>21</height>
     </rect>
    </property>
    <property name="font">
     <font>
+     <family>Arial</family>
      <pointsize>15</pointsize>
     </font>
    </property>
    <property name="text">
-    <string>You would like to...</string>
+    <string>Select what you want to do</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -141,6 +142,12 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string>Edit the Image in the Editor</string>
    </property>
@@ -150,9 +157,15 @@
     <rect>
      <x>150</x>
      <y>147</y>
-     <width>151</width>
+     <width>171</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>Save the Image to a location</string>
@@ -166,6 +179,12 @@
      <width>131</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>Copy to the Clipboard</string>

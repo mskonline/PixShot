@@ -4,17 +4,32 @@
 #include <QMimeData>
 #include <QMessageBox>
 
+/**
+ * Constructor
+ *
+ * @brief AppManager::AppManager
+ */
 AppManager::AppManager()
 {
 }
 
+/**
+ * Init method to intialize the modules, interface and the connections
+ *
+ * @brief AppManager::init
+ */
 void AppManager::init()
 {
     this->loadModules();
-    this->createInterface();
+    this->loadInterface();
     this->setConnections();
 }
 
+/**
+ * Load the modules mainly the preferences
+ *
+ * @brief AppManager::loadModules
+ */
 void AppManager::loadModules()
 {
     /*
@@ -23,7 +38,9 @@ void AppManager::loadModules()
     try
     {
         if(!QFile::exists(PREFERENCES_FILE))
+        {
             Preferences::createDefault(PREFERENCES_FILE);
+        }
 
         preferences = new Preferences(PREFERENCES_FILE);
         preferences->load();
@@ -51,6 +68,11 @@ void AppManager::loadModules()
     }
 }
 
+/**
+ * Set all the top level interface connections
+ *
+ * @brief AppManager::setConnections
+ */
 void AppManager::setConnections()
 {
     connect(interface,SIGNAL(closeApp()),this,SLOT(closeApp()));
@@ -59,18 +81,32 @@ void AppManager::setConnections()
     connect(interface->actionPaste,SIGNAL(triggered()),this,SLOT(copyFromClipBoard()));
 }
 
-void AppManager::createInterface()
+/**
+ * Load the interface
+ *
+ * @brief AppManager::loadInterface
+ */
+void AppManager::loadInterface()
 {
     interface = new Interface(this->preferences);
 
     if(preferences->trayIcon)
+    {
         preferences->trayOnStart ? interface->hide() : interface->showMaximized();
+    }
     else
+    {
         interface->showMaximized();
+    }
 
     this->checkClipboardforImages();
 }
 
+/**
+ *
+ *
+ * @brief AppManager::checkClipboardforImages
+ */
 void AppManager::checkClipboardforImages()
 {
     // Check if the clipboard has any images
@@ -120,7 +156,7 @@ void AppManager::copyFromClipBoard()
     }
     catch(...)
     {
-        interface->report(ERROR,"Cannot copy image.Clipboard inaccessible.");
+        interface->report(ERROR,"Cannot copy image. Clipboard inaccessible.");
         return;
     }
 

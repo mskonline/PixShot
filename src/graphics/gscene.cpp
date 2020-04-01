@@ -18,13 +18,19 @@ GScene::GScene(ItemProperties *prop)
     DRAW_MODE = false;
     this->OBJECT_TYPE = RECTANGLE;
     this->prop = prop;
-    this->item = NULL;
-    this->currentPix = NULL;
+    this->item = nullptr;
+    this->currentPix = nullptr;
     this->selectionMode = false;
 
     pixList = new QList<GPixMap *>;
 }
 
+/**
+ * The mouse press event. Every item is rendered based on the selection state
+ *
+ * @brief GScene::mousePressEvent
+ * @param event
+ */
 void GScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if((event->button() == Qt::LeftButton) && DRAW_MODE)
@@ -88,6 +94,7 @@ void GScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
         }
     }
 
+    // Lets update the scene
     this->update();
 
     if(!selectionMode)
@@ -192,12 +199,14 @@ void GScene::keyReleaseEvent(QKeyEvent *keyEvent)
             emit releaseCtrl();
             break;
         case Qt::Key_Z:
-            if(keyEvent->modifiers() && Qt::ControlModifier){
+            if(keyEvent->modifiers() && Qt::ControlModifier)
+            {
                 this->undo();
             }
             break;
         case Qt::Key_Y:
-            if(keyEvent->modifiers() && Qt::ControlModifier){
+            if(keyEvent->modifiers() && Qt::ControlModifier)
+            {
                 this->redo();
             }
             break;
@@ -208,16 +217,39 @@ void GScene::keyReleaseEvent(QKeyEvent *keyEvent)
     this->update();
 }
 
-void GScene::setPixmap(QPixmap p)
+void GScene::setPixmap(QPixmap pixmap)
 {
+    QSize pSize = pixmap.size();
+    int scaledWidth = pSize.width();
+    int scaledHeight = pSize.height();
+    bool requiresScaling = false;
+
+    QSize vSize = this->views().last()->size();
+
+    if(pSize.width() > vSize.width())
+    {
+        requiresScaling = true;
+        scaledWidth = vSize.width();
+    }
+
+    if (pSize.height() > vSize.height())
+    {
+        requiresScaling = true;
+        scaledHeight = vSize.height();
+    }
+
     if(currentPix)
         currentPix->setVisible(false);
 
-    currentPix = new GPixMap(p);
-    pixList->append(currentPix);
+    if(requiresScaling)
+    {
+        pixmap = pixmap.scaled(scaledWidth, scaledHeight, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    }
 
+    currentPix = new GPixMap(pixmap);
+
+    pixList->append(currentPix);
     this->addItem(currentPix);
-    this->setSceneRect(currentPix->boundingRect());
 }
 
 void GScene::setActivePixmap(int i)
@@ -245,7 +277,7 @@ void GScene::removePixmap(int index)
     // Last pixmap is removed
     if(pixList->count() == 0) {
         // Reset the SceneRect
-        this->setSceneRect(QRect(0,0,1,1));
+        this->setSceneRect(QRect(0, 0, 1, 1));
         return;
     }
 
@@ -507,9 +539,14 @@ void GScene::setPixScale(qreal s)
 int GScene::getZoomStep()
 {
     if(currentPix)
+    {
         return currentPix->zoomStep;
-    else // When opening the first pix
+    }
+    else
+    {
+        // When opening the first pix
         return 1;
+    }
 }
 
 void GScene::setZoomStep(int zStep)

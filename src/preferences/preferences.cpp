@@ -33,12 +33,12 @@ void Preferences::load()
 // FIXME : static access ?
 QVariant Preferences::fetchProperty(QString property,QString group)
 {
-    QSettings *settings = new QSettings(PREFERENCES_FILE,QSettings::IniFormat,NULL);
+    QSettings *settings = new QSettings(PREFERENCES_FILE,QSettings::IniFormat,nullptr);
     settings->beginGroup(group);
-    QVariant v = settings->value(property);
+    QVariant value = settings->value(property);
     settings->endGroup();
 
-    return v;
+    return value;
 }
 
 void Preferences::showPreferences(QWidget *parent)
@@ -80,7 +80,8 @@ void Preferences::showPreferences(QWidget *parent)
     prefUi->cb_toTray_onStart->setChecked(this->trayOnStart);
     prefUi->cb_toTray_onClose->setChecked(this->toTrayOnClose);
 
-    if(!this->trayIcon) {
+    if(!this->trayIcon)
+    {
         prefUi->cb_toTray_onStart->setDisabled(true);
         prefUi->cb_toTray_onClose->setDisabled(true);
     }
@@ -95,9 +96,9 @@ void Preferences::cancelPreferences()
     delete prefUi;
 }
 
-void Preferences::savePreferences(int pref)
+void Preferences::savePreferences(int prefrence)
 {  
-    switch(pref)
+    switch(prefrence)
     {
         case SAVE_LOCATION:
             this->saveLocation = prefUi->le_saveLocation->text();
@@ -183,9 +184,9 @@ void Preferences::savePreferences(int pref)
     sync();
 }
 
-void Preferences::createDefault(QString filename)
+void Preferences::createDefault(QString fileName)
 {
-    QSettings settings(filename,QSettings::IniFormat,NULL);
+    QSettings settings(fileName,QSettings::IniFormat,nullptr);
 
     settings.beginGroup("PixShot");
     settings.setValue("version",VERSION);

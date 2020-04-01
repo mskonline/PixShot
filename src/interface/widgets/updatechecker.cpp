@@ -32,7 +32,7 @@ UpdateChecker::UpdateChecker(QWidget *parent) :
     this->setAttribute(Qt::WA_QuitOnClose);
 
     this->pb_download->setVisible(false);
-    authDialog = NULL;
+    authDialog = nullptr;
 
     connect(pb_download,SIGNAL(released()),this,SLOT(openForDownload()));
 

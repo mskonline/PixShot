@@ -22,27 +22,9 @@
     <normaloff>:/images/images/systray-small.png</normaloff>:/images/images/systray-small.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
-    <property name="spacing">
-     <number>0</number>
-    </property>
-    <property name="leftMargin">
-     <number>0</number>
-    </property>
-    <property name="topMargin">
-     <number>0</number>
-    </property>
-    <property name="rightMargin">
-     <number>0</number>
-    </property>
-    <property name="bottomMargin">
-     <number>0</number>
-    </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
-      <property name="spacing">
-       <number>0</number>
-      </property>
       <item>
        <widget class="QWidget" name="tabArea" native="true">
         <property name="minimumSize">
@@ -61,9 +43,6 @@
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
-        <property name="spacing">
-         <number>0</number>
-        </property>
         <item>
          <widget class="QFrame" name="toolFrame">
           <property name="minimumSize">
@@ -405,6 +384,12 @@
           <property name="frameShadow">
            <enum>QFrame::Plain</enum>
           </property>
+          <property name="verticalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+          <property name="horizontalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
           <property name="renderHints">
            <set>QPainter::Antialiasing|QPainter::TextAntialiasing</set>
           </property>
@@ -463,9 +448,28 @@
     <addaction name="actionScreenCapture"/>
     <addaction name="actionRegionCapture"/>
    </widget>
+   <widget class="QMenu" name="menuObjects">
+    <property name="title">
+     <string>Objects</string>
+    </property>
+    <addaction name="actionRectangle"/>
+    <addaction name="actionCircle"/>
+    <addaction name="actionArrow"/>
+    <addaction name="actionText"/>
+    <addaction name="actionHighlighter"/>
+   </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="actionCrop"/>
+    <addaction name="actionClear_all"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuObjects"/>
    <addaction name="menuCapture"/>
+   <addaction name="menuTools"/>
    <addaction name="menuAbout"/>
   </widget>
   <action name="actionOpen">
@@ -598,6 +602,41 @@
   <action name="actionDetails">
    <property name="text">
     <string>Details</string>
+   </property>
+  </action>
+  <action name="actionRectangle">
+   <property name="text">
+    <string>Rectangle</string>
+   </property>
+  </action>
+  <action name="actionCircle">
+   <property name="text">
+    <string>Circle</string>
+   </property>
+  </action>
+  <action name="actionArrow">
+   <property name="text">
+    <string>Arrow</string>
+   </property>
+  </action>
+  <action name="actionText">
+   <property name="text">
+    <string>Text</string>
+   </property>
+  </action>
+  <action name="actionHighlighter">
+   <property name="text">
+    <string>Highlighter</string>
+   </property>
+  </action>
+  <action name="actionCrop">
+   <property name="text">
+    <string>Crop</string>
+   </property>
+  </action>
+  <action name="actionClear_all">
+   <property name="text">
+    <string>Clear all</string>
    </property>
   </action>
  </widget>

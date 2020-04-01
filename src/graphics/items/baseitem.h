@@ -11,7 +11,7 @@ public:
     QPointF spoint,epoint;
 
     BaseItem();
-    virtual void setOptions(ItemProperties *prop) {};
+    virtual void setOptions(ItemProperties *props) {};
 };
 
 #endif // BASEITEM_H

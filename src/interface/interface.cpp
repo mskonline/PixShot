@@ -20,6 +20,10 @@
 #include <windows.h>
 #endif
 
+/**
+ * @brief Interface::Interface
+ * @param preferences
+ */
 Interface::Interface(Preferences *preferences)
 {
     this->setupUi(this);
@@ -33,9 +37,9 @@ Interface::Interface(Preferences *preferences)
 
     isCtrlPressed = false;
 
-    nPixWidget = NULL;
-    sysTrayIcon = NULL;
-    actionWidget = NULL;
+    nPixWidget = nullptr;
+    sysTrayIcon = nullptr;
+    actionWidget = nullptr;
 
     init();
     setUpTabBar();
@@ -51,6 +55,9 @@ Interface::Interface(Preferences *preferences)
     //this->createNew();
 }
 
+/**
+ * @brief Interface::init
+ */
 void Interface::init()
 {
     itemProperties = new ItemProperties;
@@ -64,7 +71,7 @@ void Interface::init()
     this->graphicsView->setBackgroundBrush(brush);
     this->graphicsView->setScene(gscene);
 
-    img = NULL;
+    img = nullptr;
     this->dCursor = new QCursor(Qt::ArrowCursor);
     this->toolFrame->setDisabled(true);
     this->tabArea->hide();
@@ -77,6 +84,9 @@ void Interface::init()
     // RegisterHotKey(this->winId(),100,0,VK_SNAPSHOT);
 }
 
+/**
+ * @brief Interface::setUpTabBar
+ */
 void Interface::setUpTabBar()
 {
     QHBoxLayout *hLayout = new QHBoxLayout(this->tabArea);
@@ -87,11 +97,13 @@ void Interface::setUpTabBar()
     hLayout->addWidget(tabBar);
 
     tabBar->setMinimumWidth(35);
+
     #if defined (Q_OS_WIN)
-    tabBar->setTabsClosable(TRUE);
+        tabBar->setTabsClosable(TRUE);
     #elif defined (Q_OS_LINUX)
-    tabBar->setTabsClosable(true);
+        tabBar->setTabsClosable(true);
     #endif
+
     tabBar->setExpanding(false);
     tabBar->setElideMode(Qt::ElideRight);
 
@@ -99,6 +111,9 @@ void Interface::setUpTabBar()
     tabClose = new QShortcut(QKeySequence("alt+q"),this);
 }
 
+/**
+ * @brief Interface::setConnections
+ */
 void Interface::setConnections()
 {
     connect(actionNew,SIGNAL(triggered()),this,SLOT(createNew()));
@@ -131,6 +146,9 @@ void Interface::setConnections()
     connect(gscene,SIGNAL(releaseCtrl()),this,SLOT(releaseCtrl()));
 }
 
+/**
+ * @brief Interface::setUpToolBox
+ */
 void Interface::setUpToolBox()
 {
     toolButton = new QButtonGroup();
@@ -144,6 +162,9 @@ void Interface::setUpToolBox()
     toolButton->setExclusive(true);
 }
 
+/**
+ * @brief Interface::setUpTrayIcon
+ */
 void Interface::setUpTrayIcon()
 {
     sysTrayIcon = new QSystemTrayIcon(QIcon(":/images/images/systray-small.png"),this);
@@ -181,14 +202,23 @@ void Interface::setUpActions()
     actionShow->setIcon(QIcon(":/images/images/systray-small.png"));
 }
 
+/**
+ * @brief Interface::showTrayMenu
+ * @param reason
+ */
 void Interface::showTrayMenu(QSystemTrayIcon::ActivationReason reason)
 {
     switch(reason)
     {
-        case QSystemTrayIcon::Trigger:
-        case QSystemTrayIcon::MiddleClick:
-                this->showUp();
-            break;
+    case QSystemTrayIcon::Unknown:
+    case QSystemTrayIcon::Context:
+        // Do nothing
+        break;
+    case QSystemTrayIcon::Trigger:
+    case QSystemTrayIcon::DoubleClick:
+    case QSystemTrayIcon::MiddleClick:
+        this->showUp();
+        break;
     }
 }
 
@@ -247,7 +277,7 @@ void Interface::doAction(int actionType)
             this->showUp();
             break;
         case 1: // Save
-            path = QFileDialog::getSaveFileName(NULL,
+            path = QFileDialog::getSaveFileName(nullptr,
                                             tr("Save the image"),
                                             preferences->lastSaveLocation,
                                             tr("Image Files (*.png *.jpeg *.jpg)"));
@@ -749,6 +779,11 @@ void Interface::captureScreen()
 
     QDesktopWidget *dw = QApplication::desktop();
     capturedPix = QPixmap::grabWindow(dw->screen(dw->primaryScreen())->winId());
+
+    //int w = this->graphicsView->width();
+    //int h = this->graphicsView->height();
+
+    //capturedPix = capturedPix.scaled(w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     if(!actionWidget)
     {
