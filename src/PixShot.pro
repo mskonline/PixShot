@@ -5,7 +5,6 @@ QT += widgets network xml printsupport
 TARGET = PixShot
 TEMPLATE = app
 SOURCES += main.cpp \
-    appmanager/appmanager.cpp \
     interface/interface.cpp \
     graphics/gscene.cpp \
     graphics/items/rectitem.cpp \
@@ -20,18 +19,17 @@ SOURCES += main.cpp \
     interface/regioncapturescene.cpp \
     graphics/items/regionselectitem.cpp \
     interface/about.cpp \
+    pixshot.cpp \
     preferences/preferences.cpp \
     interface/PreferenceInterface.cpp \
     interface/filenameprompt.cpp \
     graphics/gpixmap.cpp \
     interface/newpixwidget.cpp \
     interface/widgets/updatechecker.cpp \
-    qapp.cpp \
     interface/widgets/actionwidget.cpp \
     graphics/gaction.cpp
 
-HEADERS += appmanager/appmanager.h \
-    interface/interface.h \
+HEADERS += interface/interface.h \
     graphics/gscene.h \
     graphics/items/rectitem.h \
     graphics/items/baseitem.h \
@@ -46,13 +44,13 @@ HEADERS += appmanager/appmanager.h \
     interface/regioncapturescene.h \
     graphics/items/regionselectitem.h \
     interface/about.h \
+    pixshot.h \
     preferences/preferences.h \
     interface/PreferenceInterface.h \
     interface/filenameprompt.h \
     graphics/gpixmap.h \
     interface/newpixwidget.h \
     interface/widgets/updatechecker.h \
-    qapp.h \
     interface/widgets/actionwidget.h \
     graphics/gaction.h
 win32:UI_DIR = temp/ui

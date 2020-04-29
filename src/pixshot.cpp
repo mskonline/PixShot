@@ -1,16 +1,21 @@
-#include "appmanager.h"
+#include "pixshot.h"
+#include "./commons/commons.h"
+
 #include <QDebug>
 #include <QFile>
 #include <QMimeData>
 #include <QMessageBox>
+#include <QClipboard>
 
-/**
- * Constructor
- *
- * @brief AppManager::AppManager
- */
-AppManager::AppManager()
+PixShot::PixShot(int argc, char *argv[]): QApplication(argc,argv)
 {
+    this->setStyleSheet(APP_STYLE);
+    this->addLibraryPath(LIB_PATH);
+
+    this->setApplicationName(APP_NAME);
+    this->setApplicationVersion(APP_VERSION);
+    this->setOrganizationName(APP_NAME);
+    this->setOrganizationDomain(APP_WEBSITE);
 }
 
 /**
@@ -18,7 +23,7 @@ AppManager::AppManager()
  *
  * @brief AppManager::init
  */
-void AppManager::init()
+void PixShot::init()
 {
     this->loadModules();
     this->loadInterface();
@@ -30,7 +35,7 @@ void AppManager::init()
  *
  * @brief AppManager::loadModules
  */
-void AppManager::loadModules()
+void PixShot::loadModules()
 {
     /*
      * All Preferences will be saved in preferences.ini
@@ -50,7 +55,7 @@ void AppManager::loadModules()
     catch(...)
     {
         QMessageBox msgBox;
-        msgBox.setParent(interface);
+        msgBox.setParent(pixShotInterface);
         msgBox.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
         msgBox.resize(500,100);
         msgBox.setText("Cannot Load Preferences.    ");
@@ -62,7 +67,7 @@ void AppManager::loadModules()
         switch(ret)
         {
             case QMessageBox::Yes :
-                    qApp->quit();
+                    this->quit();
                 break;
         }
     }
@@ -73,12 +78,12 @@ void AppManager::loadModules()
  *
  * @brief AppManager::setConnections
  */
-void AppManager::setConnections()
+void PixShot::setConnections()
 {
-    connect(interface,SIGNAL(closeApp()),this,SLOT(closeApp()));
-    connect(interface->actionExit,SIGNAL(triggered()),this,SLOT(closeApp())); 
-    connect(interface->actionCopy,SIGNAL(triggered()),this,SLOT(copyToClipBoard()));
-    connect(interface->actionPaste,SIGNAL(triggered()),this,SLOT(copyFromClipBoard()));
+    connect(pixShotInterface,SIGNAL(closeApp()),this,SLOT(closeApp()));
+    connect(pixShotInterface->actionExit,SIGNAL(triggered()),this,SLOT(closeApp()));
+    connect(pixShotInterface->actionCopy,SIGNAL(triggered()),this,SLOT(copyToClipBoard()));
+    connect(pixShotInterface->actionPaste,SIGNAL(triggered()),this,SLOT(copyFromClipBoard()));
 }
 
 /**
@@ -86,17 +91,17 @@ void AppManager::setConnections()
  *
  * @brief AppManager::loadInterface
  */
-void AppManager::loadInterface()
+void PixShot::loadInterface()
 {
-    interface = new Interface(this->preferences);
+    pixShotInterface = new Interface(this->preferences);
 
     if(preferences->trayIcon)
     {
-        preferences->trayOnStart ? interface->hide() : interface->showMaximized();
+        preferences->trayOnStart ? pixShotInterface->hide() : pixShotInterface->showMaximized();
     }
     else
     {
-        interface->showMaximized();
+        pixShotInterface->showMaximized();
     }
 
     this->checkClipboardforImages();
@@ -107,7 +112,7 @@ void AppManager::loadInterface()
  *
  * @brief AppManager::checkClipboardforImages
  */
-void AppManager::checkClipboardforImages()
+void PixShot::checkClipboardforImages()
 {
     // Check if the clipboard has any images
     try
@@ -115,7 +120,7 @@ void AppManager::checkClipboardforImages()
         const QMimeData *mimeData = QApplication::clipboard()->mimeData();
 
         if(mimeData->hasImage()){
-            interface->enablePasteOption();
+            pixShotInterface->enablePasteOption();
         }
     }
     catch(...)
@@ -124,14 +129,9 @@ void AppManager::checkClipboardforImages()
     }
 }
 
-void AppManager::activateRegionCapture()
+void PixShot::copyToClipBoard()
 {
-    this->interface->captureRegion();
-}
-
-void AppManager::copyToClipBoard()
-{
-    QImage img = interface->renderSceneToImage();
+    QImage img = pixShotInterface->renderSceneToImage();
     QClipboard *clipBoard = QApplication::clipboard();
 
     try
@@ -140,12 +140,12 @@ void AppManager::copyToClipBoard()
     }
     catch(...)
     {
-        interface->report(ERROR,"Cannot save image.Clipboard inaccessible.");
+        pixShotInterface->report(ERROR,"Cannot save image.Clipboard inaccessible.");
         return;
     }
 }
 
-void AppManager::copyFromClipBoard()
+void PixShot::copyFromClipBoard()
 {
     QClipboard *clipBoard = QApplication::clipboard();
     QImage img;
@@ -156,45 +156,45 @@ void AppManager::copyFromClipBoard()
     }
     catch(...)
     {
-        interface->report(ERROR,"Cannot copy image. Clipboard inaccessible.");
+        pixShotInterface->report(ERROR,"Cannot copy image. Clipboard inaccessible.");
         return;
     }
 
     if(!img.isNull())
     {
-        this->interface->setPixmap(QPixmap::fromImage(img));
+        this->pixShotInterface->setPixmap(QPixmap::fromImage(img));
     }
     else
     {
-        interface->report(ERROR,"No Image is available in the Clipboard.");
+        pixShotInterface->report(ERROR,"No Image is available in the Clipboard.");
     }
 }
 
-void AppManager::updatePreferences(int pref)
+void PixShot::updatePreferences(int pref)
 {
     switch(pref)
     {
         case TEXT_ITEM_FONT:
-            interface->gscene->setTextItemFont(preferences->textItemFont);
+            pixShotInterface->gscene->setTextItemFont(preferences->textItemFont);
             break;
         case ITEM_COLOR:
-            interface->itemProperties->itemColor = preferences->itemColor;
+            pixShotInterface->itemProperties->itemColor = preferences->itemColor;
             break;
         case INTERFACE_BG_COLOR:
-            interface->setBackgroundColor();
+            pixShotInterface->setBackgroundColor();
             break;
         case TOGGLE_TRAY_ICON:
-            interface->toggleTrayIcon();
+            pixShotInterface->toggleTrayIcon();
             break;
     }
 }
 
-void AppManager::closeApp()
+void PixShot::closeApp()
 {
-    if(!interface->isImageAnnotated())
+    if(!pixShotInterface->isImageAnnotated())
     {
         QMessageBox msgBox;
-        msgBox.setParent(interface);
+        msgBox.setParent(pixShotInterface);
         msgBox.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
         msgBox.resize(500,100);
         msgBox.setText("You have annotated an image    ");
@@ -207,7 +207,7 @@ void AppManager::closeApp()
         {
             case QMessageBox::Yes :
                     preferences->savePreferences(LOCATIONS);
-                    qApp->quit();
+                    this->quit();
                 break;
             case QMessageBox::No :;
         }
@@ -220,9 +220,22 @@ void AppManager::closeApp()
     }
 }
 
-AppManager::~AppManager()
+#if defined (Q_OS_WIN)
+bool PixShot::winEventFilter(MSG * msg, long * result)
 {
-    delete interface;
+    switch(msg->message)
+    {
+        case WM_HOTKEY:
+            this->pixShotInterface->captureRegion();
+            break;
+    }
+
+    return(false);
+}
+#endif
+
+PixShot::~PixShot()
+{
+    delete pixShotInterface;
     delete preferences;
 }
-

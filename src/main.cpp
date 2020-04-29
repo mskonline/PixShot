@@ -1,37 +1,23 @@
-#include "appmanager/appmanager.h"
+#include "pixshot.h"
 #include "commons/commons.h"
-#include "qapp.h"
+
 #include <QSharedMemory>
 
 /**
- *
+ * The main function
  *
  * @brief qMain
- * @param argc
- * @param argv
- * @return
+ * @param argc the argument count
+ * @param argv the argument list
+ * @return run status
  */
 int main(int argc, char *argv[])
 {
-    QApp *application = new QApp(argc, argv);
-    application->setStyleSheet(APP_STYLE);
-    application->addLibraryPath(LIB_PATH);
+    PixShot *pixshotInstance = new PixShot(argc, argv);
+    pixshotInstance->init();
 
-    QCoreApplication::setApplicationName(APP_NAME);
-    QCoreApplication::setApplicationVersion(APP_VERSION);
-    QCoreApplication::setOrganizationName(APP_NAME);
-    QCoreApplication::setOrganizationDomain(APP_WEBSITE);
-
-    AppManager *app;
-
-    app = new AppManager();
-    app->init();
-
-    QObject::connect(application, SIGNAL(activateRegionCapture()), app, SLOT(activateRegionCapture()));
-
-    if(application->exec() == NORMAL_RUN)
+    if(pixshotInstance->exec() == NORMAL_RUN)
     {
-        delete app;
         return NORMAL_RUN;
     }
     else
