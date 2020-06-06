@@ -7,9 +7,9 @@
 #include <QPainterPath>
 #include <QContextMenuEvent>
 
-#include "baseitem.h"
+#include "pixshotgraphicsitem.h"
 
-class CircleItem : public BaseItem
+class Circle : public PixShotGraphicsItem
 {
 private:
 
@@ -20,12 +20,12 @@ private:
 
 public:
 
-    CircleItem(QGraphicsItem *parent = 0);
+    Circle(QGraphicsItem *parent = 0);
     void setOptions(ItemProperties *prop);
     QPainterPath shape() const;
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    ~CircleItem();
+    ~Circle();
 
 private:
 

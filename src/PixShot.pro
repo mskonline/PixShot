@@ -5,23 +5,23 @@ QT += widgets network xml printsupport
 TARGET = PixShot
 TEMPLATE = app
 SOURCES += main.cpp \
+    graphics/items/arrow.cpp \
+    graphics/items/circle.cpp \
+    graphics/items/crop.cpp \
+    graphics/items/highlighter.cpp \
+    graphics/items/pixshotgraphicsitem.cpp \
+    graphics/items/rectangle.cpp \
+    graphics/items/regionselect.cpp \
+    graphics/items/text.cpp \
+    graphics/pixshotgraphicsscene.cpp \
     interface/interface.cpp \
-    graphics/gscene.cpp \
-    graphics/items/rectitem.cpp \
-    graphics/items/baseitem.cpp \
+    interface/preferenceinterface.cpp \
     interface/toolbox.cpp \
-    graphics/items/circleitem.cpp \
-    graphics/items/arrowitem.cpp \
     interface/itemsettings.cpp \
-    graphics/items/textitem.cpp \
-    graphics/items/cropitem.cpp \
-    graphics/items/highlighteritem.cpp \
     interface/regioncapturescene.cpp \
-    graphics/items/regionselectitem.cpp \
     interface/about.cpp \
     pixshot.cpp \
     preferences/preferences.cpp \
-    interface/PreferenceInterface.cpp \
     interface/filenameprompt.cpp \
     graphics/gpixmap.cpp \
     interface/newpixwidget.cpp \
@@ -30,23 +30,26 @@ SOURCES += main.cpp \
     graphics/gaction.cpp
 
 HEADERS += interface/interface.h \
-    graphics/gscene.h \
-    graphics/items/rectitem.h \
-    graphics/items/baseitem.h \
+    constants/application.h \
+    constants/preference.h \
+    graphics/constants/graphics.h \
+    graphics/items/arrow.h \
+    graphics/items/circle.h \
+    graphics/items/crop.h \
+    graphics/items/highlighter.h \
+    graphics/items/pixshotgraphicsitem.h \
+    graphics/items/rectangle.h \
+    graphics/items/regionselect.h \
+    graphics/items/text.h \
+    graphics/pixshotgraphicsscene.h \
+    interface/preferenceinterface.h \
     interface/toolbox.h \
-    graphics/items/circleitem.h \
     commons/commons.h \
-    graphics/items/arrowitem.h \
     interface/itemsettings.h \
-    graphics/items/textitem.h \
-    graphics/items/cropitem.h \
-    graphics/items/highlighteritem.h \
     interface/regioncapturescene.h \
-    graphics/items/regionselectitem.h \
     interface/about.h \
     pixshot.h \
     preferences/preferences.h \
-    interface/PreferenceInterface.h \
     interface/filenameprompt.h \
     graphics/gpixmap.h \
     interface/newpixwidget.h \

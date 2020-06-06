@@ -1,8 +1,8 @@
-#include "cropitem.h"
+#include "crop.h"
 #include <QPainter>
 #include <QPushButton>
 
-CropItem::CropItem(QGraphicsScene *scene, QGraphicsItem *parent)
+Crop::Crop(QGraphicsScene *scene, QGraphicsItem *parent)
 {
     this->setParentItem(parent);
     this->setPos(0,0);
@@ -31,7 +31,7 @@ CropItem::CropItem(QGraphicsScene *scene, QGraphicsItem *parent)
     temp = "test";
 }
 
-void CropItem::setOptions(ItemProperties *prop)
+void Crop::setOptions(ItemProperties *prop)
 {
     /* IGNORE
     this->pen = prop->itemPen;
@@ -39,12 +39,12 @@ void CropItem::setOptions(ItemProperties *prop)
     */
 }
 
-QRectF CropItem::boundingRect() const
+QRectF Crop::boundingRect() const
 {
     return QRectF(startPoint,endPoint);
 }
 
-void CropItem::createTool()
+void Crop::createTool()
 {
     QPushButton *pb_crop;
     QPushButton *pb_cancel;
@@ -79,17 +79,17 @@ void CropItem::createTool()
     panel->setZValue(this->zValue() + 10);
 }
 
-void CropItem::emitCancel()
+void Crop::emitCancel()
 {
     emit cancel();
 }
 
-void CropItem::emitCrop()
+void Crop::emitCrop()
 {
     emit crop();
 }
 
-void CropItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void Crop::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     /*painter->setPen(pen);
     painter->setBrush(brush);
@@ -134,6 +134,6 @@ void CropItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     panel->setPos(epoint);
 }
 
-CropItem::~CropItem()
+Crop::~Crop()
 {    
 }

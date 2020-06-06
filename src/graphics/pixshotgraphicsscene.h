@@ -7,16 +7,16 @@
 #include <QList>
 #include <QMetaType>
 #include "gpixmap.h"
-#include "items/baseitem.h"
-#include "items/rectitem.h"
-#include "items/circleitem.h"
-#include "items/arrowitem.h"
-#include "items/textitem.h"
-#include "items/cropitem.h"
-#include "items/highlighteritem.h"
-#include "../commons/commons.h"
+#include "items/pixshotgraphicsitem.h"
+#include "items/rectangle.h"
+#include "items/circle.h"
+#include "items/arrow.h"
+#include "items/text.h"
+#include "items/crop.h"
+#include "items/highlighter.h"
+#include "./constants/graphics.h"
 
-class GScene : public QGraphicsScene
+class PixShotGraphicsScene : public QGraphicsScene
 {
     Q_OBJECT
 
@@ -25,8 +25,8 @@ public:
     bool DRAW_MODE;
     OBJECTS OBJECT_TYPE;
 
-    GScene(ItemProperties *);
-    ~GScene();
+    PixShotGraphicsScene(ItemProperties *);
+    ~PixShotGraphicsScene();
 
     void setPixmap(QPixmap);
     void setNewScreen();
@@ -45,7 +45,7 @@ public:
 
 private:
 
-    BaseItem *item;
+    PixShotGraphicsItem *item;
     ItemProperties *prop;
     QFont textItemFont;
     QGraphicsTextItem *textItem;
@@ -76,7 +76,7 @@ public slots:
     void cropImage();
     void cancelCrop();
     void clearObjects();
-    void TextItemFocusLost(TextItem *);
+    void TextItemFocusLost(Text *);
     void setActivePixmap(int);
 };
 

@@ -12,7 +12,7 @@ void RegionCaptureScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton)
     {
-        item = new RegionSelectItem(pixItem);
+        item = new RegionSelect(pixItem);
         item->spoint = item->epoint = event->scenePos();
         item->update();
         this->update();
@@ -27,7 +27,7 @@ void RegionCaptureScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     this->update();
 
     // lets delay
-    QTimer::singleShot(500,this,SLOT(captureRegion()));
+    QTimer::singleShot(500, this, SLOT(captureRegion()));
 }
 
 void RegionCaptureScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -48,10 +48,10 @@ void RegionCaptureScene::keyReleaseEvent(QKeyEvent *keyEvent)
 {
     switch(keyEvent->key())
     {
-        case Qt::Key_Escape:
-            if(item)
-                this->removeItem(item);
-            emit closeView();
+    case Qt::Key_Escape:
+        if(item)
+            this->removeItem(item);
+        emit closeView();
         break;
     }
 }

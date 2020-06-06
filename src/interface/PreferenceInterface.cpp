@@ -1,5 +1,5 @@
-#include "PreferenceInterface.h"
-#include "../commons/commons.h"
+#include "preferenceinterface.h"
+#include "../constants/preference.h"
 
 #include <QColorDialog>
 #include <QFileDialog>

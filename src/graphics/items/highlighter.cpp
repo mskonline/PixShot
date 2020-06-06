@@ -1,7 +1,7 @@
-#include "highlighteritem.h"
+#include "highlighter.h"
 #include <QPainter>
 
-HighLighterItem::HighLighterItem(QGraphicsItem *parent)
+HighLighter::HighLighter(QGraphicsItem *parent)
     :isSelected(false)
 {
     this->setParentItem(parent);
@@ -18,7 +18,7 @@ HighLighterItem::HighLighterItem(QGraphicsItem *parent)
     rBR = new QRectF(QPointF(0,0),QSizeF(8,8));
 }
 
-void HighLighterItem::setOptions(ItemProperties *prop)
+void HighLighter::setOptions(ItemProperties *prop)
 {
     /* IGNORE
     this->pen = prop->itemPen;
@@ -26,19 +26,19 @@ void HighLighterItem::setOptions(ItemProperties *prop)
     */
 }
 
-QRectF HighLighterItem::boundingRect() const
+QRectF HighLighter::boundingRect() const
 {
     return QRectF(spoint,epoint);
 }
 
-void HighLighterItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void HighLighter::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     /* Draw mini boxes around the rectangle */
     isSelected = true;
     this->update();
 }
 
-QVariant HighLighterItem::itemChange(GraphicsItemChange change, const QVariant &value)
+QVariant HighLighter::itemChange(GraphicsItemChange change, const QVariant &value)
 {
     switch(change)
     {
@@ -50,7 +50,7 @@ QVariant HighLighterItem::itemChange(GraphicsItemChange change, const QVariant &
     return QGraphicsItem::itemChange(change,value);
 }
 
-void HighLighterItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void HighLighter::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->setPen(pen);
     painter->setBrush(brush);

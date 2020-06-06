@@ -1,15 +1,12 @@
-#ifndef RECTITEM_H
-#define RECTITEM_H
+#ifndef HIGHLIGHTERITEM_H
+#define HIGHLIGHTERITEM_H
 
-#include <QPen>
-#include <QMenu>
 #include <QBrush>
-#include <QPainterPath>
-#include <QContextMenuEvent>
+#include <QPen>
 
-#include "baseitem.h"
+#include "pixshotgraphicsitem.h"
 
-class RectItem : public BaseItem
+class HighLighter : public PixShotGraphicsItem
 {
 private:
 
@@ -20,18 +17,15 @@ private:
 
 public:
 
-    RectItem(QGraphicsItem *parent = 0);
+    HighLighter(QGraphicsItem *parent = 0);
     void setOptions(ItemProperties *prop);
-    QPainterPath shape() const;
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    ~RectItem();
 
 protected:
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void contextMenuEvent(QContextMenuEvent *e);
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 };
 
-#endif // RECTITEM_H
+#endif // HIGHLIGHTERITEM_H

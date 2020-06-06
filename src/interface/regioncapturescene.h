@@ -6,14 +6,14 @@
 #include <QKeyEvent>
 #include <QPixmap>
 
-#include "../graphics/items/regionselectitem.h"
+#include "../graphics/items/regionselect.h"
 
 class RegionCaptureScene : public QGraphicsScene
 {
     Q_OBJECT
 private:
 
-    BaseItem *item;
+    PixShotGraphicsItem *item;
     QGraphicsPixmapItem *pixItem;
 
 public:

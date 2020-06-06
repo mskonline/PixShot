@@ -1,4 +1,4 @@
-#include "gscene.h"
+#include "pixshotgraphicsscene.h"
 #include <QDebug>
 #include <QImage>
 #include <QPainter>
@@ -12,7 +12,7 @@
 #include <QGraphicsView>
 #include <QGraphicsTextItem>
 
-GScene::GScene(ItemProperties *prop)
+PixShotGraphicsScene::PixShotGraphicsScene(ItemProperties *prop)
 {
     // Initialize
     DRAW_MODE = false;
@@ -28,40 +28,50 @@ GScene::GScene(ItemProperties *prop)
 /**
  * The mouse press event. Every item is rendered based on the selection state
  *
- * @brief GScene::mousePressEvent
+ * @brief PixShotGraphicsScene::mousePressEvent
  * @param event
  */
-void GScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void PixShotGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if((event->button() == Qt::LeftButton) && DRAW_MODE)
     {
         currentPix->setModified(true);
         switch(this->OBJECT_TYPE)
         {
-            case RECTANGLE: item = new RectItem(currentPix);
-                    break;
-            case CIRCLE:    item = new CircleItem(currentPix);
-                    break;
-            case ARROW:     item = new ArrowItem(currentPix);
-                    break;
-            case TEXT:      //DRAW_MODE = false;
-                            textItem = new TextItem(currentPix);
-                            textItem->setPos(event->scenePos());
-                            textItem->setFont(prop->font);
-                            textItem->setDefaultTextColor(prop->fontColor);
-                            textItem->setTextInteractionFlags(Qt::TextEditorInteraction);
-                            textItem->setZValue(currentPix->zValue() + 100);
-                            connect(textItem,SIGNAL(lostFocus(TextItem *)),this,SLOT(TextItemFocusLost(TextItem*)));
+        case POINTER:
+            // do nothing
+            break;
+        case RECTANGLE:
+            item = new Rectangle(currentPix);
+            break;
+        case CIRCLE:
+            item = new Circle(currentPix);
+            break;
+        case ARROW:
+            item = new Arrow(currentPix);
+            break;
+        case TEXT:      //DRAW_MODE = false;
+            textItem = new Text(currentPix);
+            textItem->setPos(event->scenePos());
+            textItem->setFont(prop->font);
+            textItem->setDefaultTextColor(prop->fontColor);
+            textItem->setTextInteractionFlags(Qt::TextEditorInteraction);
+            textItem->setZValue(currentPix->zValue() + 100);
+            connect(textItem,SIGNAL(lostFocus(TextItem *)),this,SLOT(TextItemFocusLost(TextItem*)));
 
-                            QGraphicsScene::mousePressEvent(event);
-                            return;
-                    break;
-            case HIGHLIGHT: item = new HighLighterItem(currentPix);
-                    break;
-            case CROP:      item = new CropItem(this,currentPix);
-                            CropItem *t = dynamic_cast<CropItem *> (item);
-                            connect(t,SIGNAL(crop()),this,SLOT(cropImage()));
-                            connect(t,SIGNAL(cancel()),this,SLOT(cancelCrop()));
+            QGraphicsScene::mousePressEvent(event);
+            return;
+            break;
+        case HIGHLIGHT:
+            item = new HighLighter(currentPix);
+            break;
+        case CROP:
+            item = new Crop(this,currentPix);
+            Crop *t = dynamic_cast<Crop *> (item);
+            connect(t,SIGNAL(crop()),this,SLOT(cropImage()));
+            connect(t,SIGNAL(cancel()),this,SLOT(cancelCrop()));
+            break;
+
         }
 
         item->setOptions(this->prop);
@@ -103,7 +113,7 @@ void GScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
         QGraphicsScene::mousePressEvent(event);
 }
 
-void GScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+void PixShotGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     if(!selectionMode)
         event->accept();
@@ -111,7 +121,7 @@ void GScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
         QGraphicsScene::mouseDoubleClickEvent(event);
 }
 
-void GScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+void PixShotGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if(DRAW_MODE)
     {
@@ -143,7 +153,7 @@ void GScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     QGraphicsScene::mouseReleaseEvent(event);
 }
 
-void GScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+void PixShotGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if((event->buttons() & Qt::LeftButton) && DRAW_MODE)
     {
@@ -158,66 +168,66 @@ void GScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     QGraphicsScene::mouseMoveEvent(event);
 }
 
-void GScene::keyReleaseEvent(QKeyEvent *keyEvent)
+void PixShotGraphicsScene::keyReleaseEvent(QKeyEvent *keyEvent)
 {
     /* Keyboard events on the Scene */
     switch(keyEvent->key())
     {
-        case Qt::Key_Enter:
-        case Qt::Key_Return:
+    case Qt::Key_Enter:
+    case Qt::Key_Return:
 
+        if(this->OBJECT_TYPE == CROP)
+            this->cropImage();
+
+        break;
+    case Qt::Key_Escape:
+        this->DRAW_MODE = false;
+        if(item)
+        {
             if(this->OBJECT_TYPE == CROP)
-                this->cropImage();
-
-            break;
-        case Qt::Key_Escape:
-            this->DRAW_MODE = false;
-            if(item)
-            {                
-                if(this->OBJECT_TYPE == CROP)
-                {
-                    CropItem *t = dynamic_cast<CropItem *> (item);
-                    this->removeItem(t->panel);
-                    this->removeItem(item);
-                }
-            }
-            emit resetCursor();
-            break;
-        case Qt::Key_Delete:
-            // Delete an item which has focus/selected
-            this->DRAW_MODE = false;
-            action = new GAction();
-            action->action = DELETE;
-            action->vt.setValue(this->selectedItems());
-            currentPix->undoList->push(action);
-
-            foreach(QGraphicsItem *item, this->selectedItems())
-                item->hide();
-
-            break;
-        case Qt::Key_Control:
-            emit releaseCtrl();
-            break;
-        case Qt::Key_Z:
-            if(keyEvent->modifiers() && Qt::ControlModifier)
             {
-                this->undo();
+                Crop *t = dynamic_cast<Crop *> (item);
+                this->removeItem(t->panel);
+                this->removeItem(item);
             }
-            break;
-        case Qt::Key_Y:
-            if(keyEvent->modifiers() && Qt::ControlModifier)
-            {
-                this->redo();
-            }
-            break;
-        default:;
-            /* Do Nothing */
+        }
+        emit resetCursor();
+        break;
+    case Qt::Key_Delete:
+        // Delete an item which has focus/selected
+        this->DRAW_MODE = false;
+        action = new GAction();
+        action->action = DELETE;
+        action->vt.setValue(this->selectedItems());
+        currentPix->undoList->push(action);
+
+        foreach(QGraphicsItem *item, this->selectedItems())
+            item->hide();
+
+        break;
+    case Qt::Key_Control:
+        emit releaseCtrl();
+        break;
+    case Qt::Key_Z:
+        if(keyEvent->modifiers() == Qt::ControlModifier)
+        {
+            this->undo();
+        }
+        break;
+    case Qt::Key_Y:
+        if(keyEvent->modifiers() == Qt::ControlModifier)
+        {
+            this->redo();
+        }
+        break;
+    default:;
+        /* Do Nothing */
     }
 
     this->update();
 }
 
-void GScene::setPixmap(QPixmap pixmap)
+void PixShotGraphicsScene::setPixmap(QPixmap pixmap)
 {
     QSize pSize = pixmap.size();
     int scaledWidth = pSize.width();
@@ -252,7 +262,7 @@ void GScene::setPixmap(QPixmap pixmap)
     this->addItem(currentPix);
 }
 
-void GScene::setActivePixmap(int i)
+void PixShotGraphicsScene::setActivePixmap(int i)
 {
     if(currentPix)
     {
@@ -263,7 +273,7 @@ void GScene::setActivePixmap(int i)
     }
 }
 
-void GScene::removePixmap(int index)
+void PixShotGraphicsScene::removePixmap(int index)
 {
     currentPix = pixList->at(index);
 
@@ -288,7 +298,7 @@ void GScene::removePixmap(int index)
     currentPix->setVisible(true);
 }
 
-void GScene::undo()
+void PixShotGraphicsScene::undo()
 {
     if(!currentPix->undoList->isEmpty())
     {
@@ -300,30 +310,30 @@ void GScene::undo()
 
         switch(gAction->action)
         {
-            case CREATE:
-                item->hide();
-                break;
-            case DELETE:
-                itemList = gAction->vt.value<QList <QGraphicsItem*> >();
-                foreach(QGraphicsItem *i, itemList)
-                    i->show();
-                break;
-            case DELETE_ALL:
-                itemList = currentPix->childItems();
-                for(i = 0; i < gAction->vt.toInt(); ++i)
-                    itemList.at(i)->show();
-                break;
-            case MOVE:
-                vt.setValue(item->pos());
-                item->setPos(gAction->vt.value<QPointF>());
-                gAction->vt = vt;
-                break;
-            case IMG_CROP:
-                vt.setValue(currentPix->pixmap());
-                currentPix->setPixmap(gAction->vt.value<QPixmap>());
-                this->setSceneRect(currentPix->boundingRect());
-                gAction->vt = vt;
-                break;
+        case CREATE:
+            item->hide();
+            break;
+        case DELETE:
+            itemList = gAction->vt.value<QList <QGraphicsItem*> >();
+            foreach(QGraphicsItem *i, itemList)
+                i->show();
+            break;
+        case DELETE_ALL:
+            itemList = currentPix->childItems();
+            for(i = 0; i < gAction->vt.toInt(); ++i)
+                itemList.at(i)->show();
+            break;
+        case MOVE:
+            vt.setValue(item->pos());
+            item->setPos(gAction->vt.value<QPointF>());
+            gAction->vt = vt;
+            break;
+        case IMG_CROP:
+            vt.setValue(currentPix->pixmap());
+            currentPix->setPixmap(gAction->vt.value<QPixmap>());
+            this->setSceneRect(currentPix->boundingRect());
+            gAction->vt = vt;
+            break;
         }
 
         currentPix->redoList->push(gAction);
@@ -339,7 +349,7 @@ void GScene::undo()
     this->update();
 }
 
-void GScene::redo()
+void PixShotGraphicsScene::redo()
 {
     if(!currentPix->redoList->isEmpty())
     {
@@ -351,30 +361,30 @@ void GScene::redo()
 
         switch(gAction->action)
         {
-            case CREATE:
-                item->show();
-                break;
-            case DELETE:
-                itemList = gAction->vt.value<QList <QGraphicsItem*> >();
-                foreach(QGraphicsItem *item, itemList)
-                    item->hide();
-                break;
-            case DELETE_ALL:
-                itemList = currentPix->childItems();
-                for(i = 0; i < gAction->vt.toInt(); ++i)
-                    itemList.at(i)->hide();
-                break;
-            case MOVE:
-                vt.setValue(item->pos());
-                item->setPos(gAction->vt.value<QPointF>());
-                gAction->vt = vt;
-                break;
-            case IMG_CROP:
-                vt.setValue(currentPix->pixmap());
-                currentPix->setPixmap(gAction->vt.value<QPixmap>());
-                this->setSceneRect(currentPix->boundingRect());
-                gAction->vt = vt;
-                break;
+        case CREATE:
+            item->show();
+            break;
+        case DELETE:
+            itemList = gAction->vt.value<QList <QGraphicsItem*> >();
+            foreach(QGraphicsItem *item, itemList)
+                item->hide();
+            break;
+        case DELETE_ALL:
+            itemList = currentPix->childItems();
+            for(i = 0; i < gAction->vt.toInt(); ++i)
+                itemList.at(i)->hide();
+            break;
+        case MOVE:
+            vt.setValue(item->pos());
+            item->setPos(gAction->vt.value<QPointF>());
+            gAction->vt = vt;
+            break;
+        case IMG_CROP:
+            vt.setValue(currentPix->pixmap());
+            currentPix->setPixmap(gAction->vt.value<QPixmap>());
+            this->setSceneRect(currentPix->boundingRect());
+            gAction->vt = vt;
+            break;
         }
 
         currentPix->undoList->push(gAction);
@@ -390,7 +400,7 @@ void GScene::redo()
     this->update();
 }
 
-void GScene::renderToFile(QString path)
+void PixShotGraphicsScene::renderToFile(QString path)
 {
     QImage *img = new QImage(this->sceneRect().size().toSize(),
                              QImage::Format_RGB32);
@@ -411,7 +421,7 @@ void GScene::renderToFile(QString path)
     delete painter;
 }
 
-void GScene::renderToPrinter()
+void PixShotGraphicsScene::renderToPrinter()
 {
     QPrinter *printer = new QPrinter(QPrinter::HighResolution);
 
@@ -427,7 +437,7 @@ void GScene::renderToPrinter()
     }
 }
 
-void GScene::TextItemFocusLost(TextItem *item)
+void PixShotGraphicsScene::TextItemFocusLost(Text *item)
 {
     QTextCursor cursor = item->textCursor();
     cursor.clearSelection();
@@ -440,15 +450,15 @@ void GScene::TextItemFocusLost(TextItem *item)
     }
 }
 
-void GScene::cropImage()
+void PixShotGraphicsScene::cropImage()
 {
     action = new GAction();
     action->action = IMG_CROP;
     action->vt.setValue(currentPix->pixmap());
     currentPix->undoList->push(action);
 
-     //Do Crop
-    CropItem *t = dynamic_cast<CropItem *> (item);
+    //Do Crop
+    Crop *t = dynamic_cast<Crop *> (item);
     QRect rectf = QRect(t->spoint.toPoint(),t->epoint.toPoint());
 
     QPixmap cropPic = currentPix->pixmap().copy(rectf);
@@ -466,21 +476,21 @@ void GScene::cropImage()
     this->update();
 }
 
-void GScene::cancelCrop()
+void PixShotGraphicsScene::cancelCrop()
 {
-    CropItem *t = dynamic_cast<CropItem *> (item);
+    Crop *t = dynamic_cast<Crop *> (item);
     this->removeItem(t);
     this->removeItem(t->panel);
 
     DRAW_MODE = true;
 }
 
-bool GScene::checkForAllSaved()
+bool PixShotGraphicsScene::checkForAllSaved()
 {
     int pixCount = this->pixList->count();
 
     if(pixCount == 0)
-      return true;
+        return true;
 
     GPixMap *p;
 
@@ -497,7 +507,7 @@ bool GScene::checkForAllSaved()
     return true;
 }
 
-void GScene::clearObjects()
+void PixShotGraphicsScene::clearObjects()
 {
     QList<QGraphicsItem *> itemList = this->currentPix->childItems();
     int index;
@@ -512,17 +522,17 @@ void GScene::clearObjects()
 }
 
 
-void GScene::setTextItemFont(QFont font)
+void PixShotGraphicsScene::setTextItemFont(QFont font)
 {
     this->textItemFont = font;
 }
 
-int GScene::pixmapCount()
+int PixShotGraphicsScene::pixmapCount()
 {
     return pixList->size();
 }
 
-qreal GScene::getPixScale()
+qreal PixShotGraphicsScene::getPixScale()
 {
     if(currentPix)
         return currentPix->scale;
@@ -530,13 +540,13 @@ qreal GScene::getPixScale()
         return 1;
 }
 
-void GScene::setPixScale(qreal s)
+void PixShotGraphicsScene::setPixScale(qreal s)
 {
     if(currentPix)
         currentPix->scale = s;
 }
 
-int GScene::getZoomStep()
+int PixShotGraphicsScene::getZoomStep()
 {
     if(currentPix)
     {
@@ -549,23 +559,23 @@ int GScene::getZoomStep()
     }
 }
 
-void GScene::setZoomStep(int zStep)
+void PixShotGraphicsScene::setZoomStep(int zStep)
 {
     if(currentPix)
         currentPix->zoomStep = zStep;
 }
 
-void GScene::setSelectionMode(bool m)
+void PixShotGraphicsScene::setSelectionMode(bool m)
 {
     this->selectionMode = m;
 }
 
-bool GScene::isModifed(int index)
+bool PixShotGraphicsScene::isModifed(int index)
 {
     return pixList->at(index)->isModified();
 }
 
-GScene::~GScene()
+PixShotGraphicsScene::~PixShotGraphicsScene()
 {
     this->clear();
 }

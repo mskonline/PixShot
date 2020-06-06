@@ -14,13 +14,13 @@ ActionWidget::ActionWidget(QWidget *parent) :
     QDesktopWidget *dw = QApplication::desktop();
     QSize s = dw->screen(dw->primaryScreen())->size();
 
-    int w_by2 = s.width() / 2;
-    int h_by2 = s.height() / 2;
+    int width_by2 = s.width() / 2;
+    int height_by2 = s.height() / 2;
 
     int p_midX = this->width() / 2;
     int p_midY = this->height() / 2;
 
-    this->move(w_by2 - p_midX, h_by2 - p_midY);
+    this->move(width_by2 - p_midX, height_by2 - p_midY);
 
     bGroup = new QButtonGroup();
 

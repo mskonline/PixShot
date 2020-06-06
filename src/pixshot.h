@@ -10,6 +10,12 @@
 #include <windows.h>
 #endif
 
+/**
+ * @brief The main application class
+ * @author Sai Kumar Manakan
+ * @date 2020
+ * @copyright GPL 2.0
+ */
 class PixShot: public QApplication
 {
     Q_OBJECT

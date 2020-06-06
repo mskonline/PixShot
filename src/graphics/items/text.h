@@ -5,19 +5,19 @@
 #include <QGraphicsSceneMouseEvent>
 #include "../../commons/commons.h"
 
-class TextItem : public QGraphicsTextItem
+class Text : public QGraphicsTextItem
 {
     Q_OBJECT
 
 public:
 
-    TextItem(QGraphicsItem *parent = 0);
+    Text(QGraphicsItem *parent = 0);
     void focusOutEvent(QFocusEvent * event);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 signals:
-    void lostFocus(TextItem *);
+    void lostFocus(Text *);
 };
 
 #endif // TEXTITEM_H

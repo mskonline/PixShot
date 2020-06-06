@@ -64,12 +64,12 @@ void Interface::init()
     itemProperties->itemColor = preferences->itemColor;
 
     // Set Scene
-    gscene = new GScene(itemProperties);
+    pixShotGraphicsScene = new PixShotGraphicsScene(itemProperties);
     QBrush brush(preferences->interfaceBGColor);
     brush.setStyle(Qt::SolidPattern);
 
     this->graphicsView->setBackgroundBrush(brush);
-    this->graphicsView->setScene(gscene);
+    this->graphicsView->setScene(pixShotGraphicsScene);
 
     img = nullptr;
     this->dCursor = new QCursor(Qt::ArrowCursor);
@@ -136,14 +136,14 @@ void Interface::setConnections()
 
     connect(toolButton,SIGNAL(buttonReleased(int)),this,SLOT(selectObject(int)));
     connect(pb_Settings,SIGNAL(released()),this,SLOT(openItemSettings()));
-    connect(pb_clear,SIGNAL(released()),gscene,SLOT(clearObjects()));
+    connect(pb_clear,SIGNAL(released()),pixShotGraphicsScene,SLOT(clearObjects()));
 
     connect(tabBar,SIGNAL(currentChanged(int)),this,SLOT(setActivePixmap(int)));
     connect(tabBar,SIGNAL(tabCloseRequested(int)),this,SLOT(removePixmap(int)));
 
-    connect(gscene,SIGNAL(resetCursor()),this,SLOT(resetCursor()));
-    connect(gscene,SIGNAL(pixmapEdited(bool)),this,SLOT(pixmapEdited(bool)));
-    connect(gscene,SIGNAL(releaseCtrl()),this,SLOT(releaseCtrl()));
+    connect(pixShotGraphicsScene,SIGNAL(resetCursor()),this,SLOT(resetCursor()));
+    connect(pixShotGraphicsScene,SIGNAL(pixmapEdited(bool)),this,SLOT(pixmapEdited(bool)));
+    connect(pixShotGraphicsScene,SIGNAL(releaseCtrl()),this,SLOT(releaseCtrl()));
 }
 
 /**
@@ -318,7 +318,7 @@ void Interface::openFile()
 
     if(!filePath.isEmpty())
     {
-        gscene->setPixmap(QPixmap(filePath));
+        pixShotGraphicsScene->setPixmap(QPixmap(filePath));
         this->addTab();
         tabBar->setCurrentIndex(tabBar->count() - 1);
         this->graphicsView->unsetCursor();
@@ -369,7 +369,7 @@ void Interface::copyToClipboard()
 
 void Interface::setPixmap(QPixmap p)
 {
-    gscene->setPixmap(p);
+    pixShotGraphicsScene->setPixmap(p);
 
     this->addTab();
     tabBar->setCurrentIndex(tabBar->count() - 1);
@@ -380,7 +380,7 @@ void Interface::removePixmap(int i)
 {
     bool close = true;
 
-    if(gscene->isModifed(i)){
+    if(pixShotGraphicsScene->isModifed(i)){
         QMessageBox msgBox;
         msgBox.setParent(this);
         msgBox.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
@@ -404,7 +404,7 @@ void Interface::removePixmap(int i)
     if(close)
     {
         tabBar->removeTab(i);
-        gscene->removePixmap(i);
+        pixShotGraphicsScene->removePixmap(i);
 
         if(tabBar->count() == 0)
         {
@@ -504,7 +504,7 @@ void Interface::printImage()
 {
     if(this->tabBar->count() != 0)
     {
-        this->gscene->renderToPrinter();
+        this->pixShotGraphicsScene->renderToPrinter();
     }
 }
 
@@ -512,13 +512,13 @@ void Interface::selectObject(int id)
 {
     this->graphicsView->viewport()->unsetCursor();
 
-    gscene->OBJECT_TYPE = OBJECTS(id);
+    pixShotGraphicsScene->OBJECT_TYPE = OBJECTS(id);
     bool draw = true;
     bool toolsVisible = true;
 
     // Change Mouse Cursor
     QString cImg;
-    switch(gscene->OBJECT_TYPE)
+    switch(pixShotGraphicsScene->OBJECT_TYPE)
     {
         case POINTER:
             cImg = ":/images/images/pointer.png";
@@ -535,8 +535,8 @@ void Interface::selectObject(int id)
             cImg = ":/images/images/highlighter.png";
     }
 
-    gscene->DRAW_MODE = draw;
-    gscene->setSelectionMode(!draw);
+    pixShotGraphicsScene->DRAW_MODE = draw;
+    pixShotGraphicsScene->setSelectionMode(!draw);
     QPixmap p(cImg);
     QCursor c(p);
 
@@ -546,7 +546,7 @@ void Interface::selectObject(int id)
 
 void Interface::saveToFile(QString path)
 {
-    gscene->renderToFile(path);
+    pixShotGraphicsScene->renderToFile(path);
 
     int currTab = tabBar->currentIndex();
     tabBar->setTabText(currTab,path.section('/',-1));
@@ -554,10 +554,10 @@ void Interface::saveToFile(QString path)
 
 QImage Interface::renderSceneToImage()
 {
-    QImage img(gscene->sceneRect().size().toSize(),QImage::Format_RGB32);
+    QImage img(pixShotGraphicsScene->sceneRect().size().toSize(),QImage::Format_RGB32);
     QPainter *painter = new QPainter(&img);
 
-    gscene->render(painter);
+    pixShotGraphicsScene->render(painter);
     painter->end();
     painter->save();
     delete painter;
@@ -796,7 +796,7 @@ void Interface::captureScreen()
 
 bool Interface::isImageAnnotated()
 {
-    this->gscene->checkForAllSaved();
+    this->pixShotGraphicsScene->checkForAllSaved();
 }
 
 void Interface::setActivePixmap(int i)
@@ -808,13 +808,13 @@ void Interface::setActivePixmap(int i)
         this->c_zoom = 1;
     } else {
         // Save Zoom State
-        gscene->setPixScale(c_zoom);
-        gscene->setZoomStep(zoomStep);
+        pixShotGraphicsScene->setPixScale(c_zoom);
+        pixShotGraphicsScene->setZoomStep(zoomStep);
 
-        gscene->setActivePixmap(i);
+        pixShotGraphicsScene->setActivePixmap(i);
 
-        this->zoomStep = gscene->getZoomStep();
-        this->c_zoom = gscene->getPixScale();
+        this->zoomStep = pixShotGraphicsScene->getZoomStep();
+        this->c_zoom = pixShotGraphicsScene->getPixScale();
     }
 
     matrix.scale(c_zoom,c_zoom);
@@ -928,5 +928,5 @@ Interface::~Interface()
         delete sysTrayIcon;
     }
 
-    delete this->gscene;
+    delete this->pixShotGraphicsScene;
 }

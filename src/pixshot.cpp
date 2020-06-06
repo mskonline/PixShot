@@ -1,5 +1,7 @@
 #include "pixshot.h"
 #include "./commons/commons.h"
+#include "./constants/application.h"
+#include "./constants/preference.h"
 
 #include <QDebug>
 #include <QFile>
@@ -50,25 +52,27 @@ void PixShot::loadModules()
         preferences = new Preferences(PREFERENCES_FILE);
         preferences->load();
 
-        connect(preferences,SIGNAL(updatePreferences(int)),this,SLOT(updatePreferences(int)));
+        connect(preferences, SIGNAL(updatePreferences(int)), this, SLOT(updatePreferences(int)));
     }
     catch(...)
     {
-        QMessageBox msgBox;
-        msgBox.setParent(pixShotInterface);
-        msgBox.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
-        msgBox.resize(500,100);
-        msgBox.setText("Cannot Load Preferences.    ");
-        msgBox.setInformativeText("Please <b>Re Install</b> the Application");
-        msgBox.setStandardButtons(QMessageBox::Yes);
-        msgBox.setDefaultButton(QMessageBox::Yes);
-        int ret = msgBox.exec();
+        QMessageBox messageBox;
+        messageBox.setParent(pixShotInterface);
+        messageBox.setWindowFlags(Qt::Window | Qt::WindowCloseButtonHint);
+        messageBox.resize(500, 100);
+        messageBox.setText("Cannot Load Preferences.    ");
+        messageBox.setInformativeText("Please <b>Re Install</b> the Application");
+        messageBox.setStandardButtons(QMessageBox::Yes);
+        messageBox.setDefaultButton(QMessageBox::Yes);
+        int result = messageBox.exec();
 
-        switch(ret)
+        switch(result)
         {
             case QMessageBox::Yes :
                     this->quit();
                 break;
+            case QMessageBox::No:
+            default:;
         }
     }
 }
@@ -119,7 +123,8 @@ void PixShot::checkClipboardforImages()
     {
         const QMimeData *mimeData = QApplication::clipboard()->mimeData();
 
-        if(mimeData->hasImage()){
+        if(mimeData->hasImage())
+        {
             pixShotInterface->enablePasteOption();
         }
     }
@@ -131,12 +136,12 @@ void PixShot::checkClipboardforImages()
 
 void PixShot::copyToClipBoard()
 {
-    QImage img = pixShotInterface->renderSceneToImage();
+    QImage image = pixShotInterface->renderSceneToImage();
     QClipboard *clipBoard = QApplication::clipboard();
 
     try
     {
-        clipBoard->setImage(img);
+        clipBoard->setImage(image);
     }
     catch(...)
     {
@@ -148,11 +153,11 @@ void PixShot::copyToClipBoard()
 void PixShot::copyFromClipBoard()
 {
     QClipboard *clipBoard = QApplication::clipboard();
-    QImage img;
+    QImage image;
 
     try
     {
-        img = clipBoard->image();
+        image = clipBoard->image();
     }
     catch(...)
     {
@@ -160,9 +165,9 @@ void PixShot::copyFromClipBoard()
         return;
     }
 
-    if(!img.isNull())
+    if(!image.isNull())
     {
-        this->pixShotInterface->setPixmap(QPixmap::fromImage(img));
+        this->pixShotInterface->setPixmap(QPixmap::fromImage(image));
     }
     else
     {
@@ -170,12 +175,12 @@ void PixShot::copyFromClipBoard()
     }
 }
 
-void PixShot::updatePreferences(int pref)
+void PixShot::updatePreferences(int preference)
 {
-    switch(pref)
+    switch(preference)
     {
         case TEXT_ITEM_FONT:
-            pixShotInterface->gscene->setTextItemFont(preferences->textItemFont);
+            pixShotInterface->pixShotGraphicsScene->setTextItemFont(preferences->textItemFont);
             break;
         case ITEM_COLOR:
             pixShotInterface->itemProperties->itemColor = preferences->itemColor;

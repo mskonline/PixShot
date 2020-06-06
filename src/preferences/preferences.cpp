@@ -1,5 +1,6 @@
 #include "preferences.h"
-#include "../commons/commons.h"
+#include "../constants/preference.h"
+#include "../constants/application.h"
 #include <QDate>
 #include <QDebug>
 
@@ -33,7 +34,7 @@ void Preferences::load()
 // FIXME : static access ?
 QVariant Preferences::fetchProperty(QString property,QString group)
 {
-    QSettings *settings = new QSettings(PREFERENCES_FILE,QSettings::IniFormat,nullptr);
+    QSettings *settings = new QSettings(PREFERENCES_FILE, QSettings::IniFormat,nullptr);
     settings->beginGroup(group);
     QVariant value = settings->value(property);
     settings->endGroup();

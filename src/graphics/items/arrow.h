@@ -5,9 +5,9 @@
 #include <QBrush>
 #include <QPen>
 #include <math.h>
-#include "baseitem.h"
+#include "pixshotgraphicsitem.h"
 
-class ArrowItem : public BaseItem
+class Arrow : public PixShotGraphicsItem
 {
 private:
 
@@ -21,7 +21,7 @@ private:
 
 public:
 
-    ArrowItem(QGraphicsItem *parent = 0);
+    Arrow(QGraphicsItem *parent = 0);
     void undo();
     void redo();
     void setOptions(ItemProperties *prop);

@@ -7,10 +7,10 @@
 #include <QGraphicsProxyWidget>
 #include <QGraphicsScene>
 
-#include "baseitem.h"
+#include "pixshotgraphicsitem.h"
 
 
-class CropItem : public BaseItem
+class Crop : public PixShotGraphicsItem
 {
     Q_OBJECT
 private:
@@ -27,8 +27,8 @@ public:
     QGraphicsProxyWidget *panel;
     QString temp;
 
-    CropItem(QGraphicsScene *scene,QGraphicsItem *parent = 0);
-    ~CropItem();
+    Crop(QGraphicsScene *scene,QGraphicsItem *parent = 0);
+    ~Crop();
     void setOptions(ItemProperties *prop);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

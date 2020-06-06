@@ -1,4 +1,4 @@
-#include "textitem.h"
+#include "text.h"
 #include <QPainter>
 #include <QTextCursor>
 #include <QTextDocument>
@@ -7,20 +7,20 @@
 #include <QDebug>
 
 
-TextItem::TextItem(QGraphicsItem *parent)
+Text::Text(QGraphicsItem *parent)
 {
     this->setParentItem(parent);
     this->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
 }
 
-void TextItem::focusOutEvent(QFocusEvent * event)
+void Text::focusOutEvent(QFocusEvent * event)
 {
     setTextInteractionFlags(Qt::NoTextInteraction);
     emit lostFocus(this);
     QGraphicsTextItem::focusOutEvent(event);
 }
 
-void TextItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
+void Text::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
 {
     if(textInteractionFlags() == Qt::NoTextInteraction)
        setTextInteractionFlags(Qt::TextEditorInteraction);
@@ -38,7 +38,7 @@ void TextItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent * event)
     QGraphicsTextItem::mouseDoubleClickEvent(event);
 }
 
-void TextItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void Text::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(widget);
     bool _isSelected = option->state & (QStyle::State_Selected | QStyle::State_HasFocus);

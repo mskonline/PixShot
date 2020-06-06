@@ -3,6 +3,9 @@
 
 #include <QSharedMemory>
 
+#define NORMAL_RUN 0
+#define ABNORMAL_RUN -1
+
 /**
  * The main function
  *

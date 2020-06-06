@@ -1,7 +1,7 @@
-#include "regionselectitem.h"
+#include "regionselect.h"
 #include <QPainter>
 
-RegionSelectItem::RegionSelectItem(QGraphicsItem *parent)
+RegionSelect::RegionSelect(QGraphicsItem *parent)
 {
     this->setParentItem(parent);
     this->setFlags(QGraphicsItem::ItemIsMovable);
@@ -10,12 +10,12 @@ RegionSelectItem::RegionSelectItem(QGraphicsItem *parent)
     this->brush = QBrush(QColor(225,225,0,150),Qt::SolidPattern);
 }
 
-QRectF RegionSelectItem::boundingRect() const
+QRectF RegionSelect::boundingRect() const
 {
     return QRectF(spoint,epoint);
 }
 
-void RegionSelectItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void RegionSelect::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->setPen(pen);
     painter->setBrush(brush);

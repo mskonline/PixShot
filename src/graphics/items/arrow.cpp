@@ -1,8 +1,8 @@
-#include "arrowitem.h"
+#include "arrow.h"
 
 const qreal Pi = 3.14;
 
-ArrowItem::ArrowItem(QGraphicsItem *parent)
+Arrow::Arrow(QGraphicsItem *parent)
     :isSelected(false)
 {
     this->setParentItem(parent);
@@ -12,17 +12,17 @@ ArrowItem::ArrowItem(QGraphicsItem *parent)
     rB = new QRectF(QPointF(0,0),QSizeF(8,8));
 }
 
-void ArrowItem::undo()
+void Arrow::undo()
 {
     this->setVisible(0);
 }
 
-void ArrowItem::redo()
+void Arrow::redo()
 {
     this->setVisible(1);
 }
 
-void ArrowItem::setOptions(ItemProperties *prop)
+void Arrow::setOptions(ItemProperties *prop)
 {
     this->pen = prop->itemPen;
     this->brush = prop->itemBrush;
@@ -31,7 +31,7 @@ void ArrowItem::setOptions(ItemProperties *prop)
     this->brush.setStyle(Qt::SolidPattern);
 }
 
-/*QPainterPath ArrowItem::shape() const
+/*QPainterPath Arrow::shape() const
 {
     QPainterPath path(spoint);
     path.lineTo(epoint);
@@ -40,7 +40,7 @@ void ArrowItem::setOptions(ItemProperties *prop)
     return path;
 }*/
 
-QRectF ArrowItem::boundingRect() const
+QRectF Arrow::boundingRect() const
 {
     qreal extra = (pn.width() + 20) / 2.0;
     return QRectF(spoint, QSizeF(epoint.x() - spoint.x(),
@@ -48,7 +48,7 @@ QRectF ArrowItem::boundingRect() const
     .adjusted(-extra, -extra, extra, extra);
 }
 
-QVariant ArrowItem::itemChange(GraphicsItemChange change, const QVariant &value)
+QVariant Arrow::itemChange(GraphicsItemChange change, const QVariant &value)
 {
     switch(change)
     {
@@ -61,12 +61,12 @@ QVariant ArrowItem::itemChange(GraphicsItemChange change, const QVariant &value)
 }
 
 /**
- * @brief ArrowItem::paint Overriding the paint function to draw the arrow
+ * @brief Arrow::paint Overriding the paint function to draw the arrow
  * @param painter QPainter ptr
  * @param option QStyleOptionGraphicsItem ptr
  * @param widget QWidget ptr
  */
-void ArrowItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void Arrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->setPen(pen);
     painter->setBrush(brush);

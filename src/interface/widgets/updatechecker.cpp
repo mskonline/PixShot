@@ -1,5 +1,5 @@
 #include "updatechecker.h"
-#include "../../commons/commons.h"
+#include "../../constants/application.h"
 #include <QDesktopWidget>
 #include <QFileDialog>
 #include <QUrl>

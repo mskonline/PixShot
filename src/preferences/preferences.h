@@ -1,10 +1,16 @@
 #ifndef PREFERENCES_H
 #define PREFERENCES_H
 
-#include "../interface/PreferenceInterface.h"
+#include "../interface/preferenceinterface.h"
 #include <QSettings>
 
-
+/**
+ * @brief The Preferences class
+ * @details This class is responsible for saving and retrieving the application preferences / settings
+ * @author Sai Kumar Manakan
+ * @date 2011 - 2020
+ * @copyright GPL 2.0
+ */
 class Preferences: public QSettings
 {
     Q_OBJECT

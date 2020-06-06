@@ -1,9 +1,8 @@
-#include "rectitem.h"
+#include "circle.h"
 #include <QPainter>
 #include <QGraphicsScene>
-#include <QDebug>
 
-RectItem::RectItem(QGraphicsItem *parent)
+Circle::Circle(QGraphicsItem *parent)
     :isSelected(false)
 {
     this->setParentItem(parent);
@@ -15,41 +14,37 @@ RectItem::RectItem(QGraphicsItem *parent)
     rBR = new QRectF(QPointF(0,0),QSizeF(8,8));
 }
 
-void RectItem::setOptions(ItemProperties *prop)
+void Circle::setOptions(ItemProperties *prop)
 {
     this->pen = prop->itemPen;
     this->brush = prop->itemBrush;
 }
 
-QPainterPath RectItem::shape() const
+QPainterPath Circle::shape() const
 {
     QPainterPath path;
     path.addRect(boundingRect());
     return path;
 }
 
-QRectF RectItem::boundingRect() const
+QRectF Circle::boundingRect() const
 {
     return QRectF(spoint,epoint);
 }
 
-void RectItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void Circle::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     /* Draw mini boxes around the rectangle */
-
     isSelected = true;
     this->update();
 }
 
-void RectItem::contextMenuEvent(QContextMenuEvent *e)
+void Circle::contextMenuEvent(QContextMenuEvent *e)
 {
     //TODO
-    QMenu menu;
-    menu.addMenu("hello");
-    menu.exec(e->globalPos());
 }
 
-QVariant RectItem::itemChange(GraphicsItemChange change, const QVariant &value)
+QVariant Circle::itemChange(GraphicsItemChange change, const QVariant &value)
 {
     switch(change)
     {
@@ -61,16 +56,20 @@ QVariant RectItem::itemChange(GraphicsItemChange change, const QVariant &value)
     return QGraphicsItem::itemChange(change,value);
 }
 
-void RectItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void Circle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+
+    QRectF rect = QRectF(spoint,epoint);
     painter->setPen(pen);
     painter->setBrush(brush);
-    painter->drawRect(QRectF(spoint,epoint).normalized());
+    painter->drawEllipse(rect.normalized());
 
     if(isSelected)
     {
         /* Set the Mini Selection Boxes around the Rectangle */
-        QRectF rect = boundingRect();
+        painter->setPen(Qt::DashLine);
+        painter->setBrush(Qt::NoBrush);
+        painter->drawRect(boundingRect());
 
         QPen p;
         p.setColor(QColor(Qt::green));
@@ -95,7 +94,7 @@ void RectItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     }
 }
 
-RectItem::~RectItem()
+Circle::~Circle()
 {
     delete rTL;
     delete rTR;

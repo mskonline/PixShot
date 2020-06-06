@@ -10,11 +10,12 @@
 #include <QShortcut>
 #include <QSystemTrayIcon>
 #include "ui_interface.h"
-#include "../graphics/gscene.h"
+#include "../graphics/pixshotgraphicsscene.h"
 #include "regioncapturescene.h"
 #include "itemsettings.h"
 #include "../preferences/preferences.h"
 #include "../commons/commons.h"
+#include "../constants/application.h"
 #include "newpixwidget.h"
 #include "widgets/actionwidget.h"
 
@@ -22,13 +23,20 @@ namespace Ui {
     class Interface;
 }
 
+/**
+ * @brief The Interface class
+ * @details The class is the application's main window
+ * @author Sai Kumar Manakan
+ * @date 2011 - 2020
+ * @copyright GPL 2.0
+ */
 class Interface : public QMainWindow, public Ui::Interface
 {
     Q_OBJECT
 
 public:
 
-    GScene *gscene;
+    PixShotGraphicsScene *pixShotGraphicsScene;
     ItemSettings *itemSettings;
     ItemProperties *itemProperties;
     QButtonGroup *toolButton;

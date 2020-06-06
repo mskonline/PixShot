@@ -5,12 +5,12 @@
 #include <QUndoCommand>
 #include "../../commons/commons.h"
 
-class BaseItem : public QGraphicsItem, public QObject
+class PixShotGraphicsItem : public QGraphicsItem, public QObject
 {
 public:
     QPointF spoint,epoint;
 
-    BaseItem();
+    PixShotGraphicsItem();
     virtual void setOptions(ItemProperties *props) {};
 };
 
