@@ -7,10 +7,10 @@
 #include <QGraphicsProxyWidget>
 #include <QGraphicsScene>
 
-#include "pixshotgraphicsitem.h"
+#include "abstractitem.h"
 
 
-class Crop : public PixShotGraphicsItem
+class Crop : public AbstractItem
 {
     Q_OBJECT
 private:
@@ -19,8 +19,8 @@ private:
     QGraphicsScene *scene;
     QWidget *Form;
     QPointF pixTop,
-            startPoint,
-            endPoint;
+            cropStartPoint,
+            cropEndPoint;
     void createTool();
 
 public:

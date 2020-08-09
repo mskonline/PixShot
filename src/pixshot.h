@@ -19,15 +19,12 @@
 class PixShot: public QApplication
 {
     Q_OBJECT
-
 public:
-
     explicit PixShot(int argc, char *argv[]);
     ~PixShot();
     void init();
 
 private:
-
     Interface *pixShotInterface;
     Preferences *preferences;
 
@@ -42,7 +39,6 @@ private:
     #endif
 
 public slots:
-
     void closeApp();
     void copyToClipBoard();
     void copyFromClipBoard();

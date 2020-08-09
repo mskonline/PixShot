@@ -12,10 +12,10 @@ HighLighter::HighLighter(QGraphicsItem *parent)
     this->pen.setWidth(0);
     this->pen.setColor(QColor(225,225,0,150));
 
-    rTL = new QRectF(QPointF(0,0),QSizeF(8,8));
-    rTR = new QRectF(QPointF(0,0),QSizeF(8,8));
-    rBL = new QRectF(QPointF(0,0),QSizeF(8,8));
-    rBR = new QRectF(QPointF(0,0),QSizeF(8,8));
+    rTL = new QRectF(QPointF(0,0), QSizeF(8,8));
+    rTR = new QRectF(QPointF(0,0), QSizeF(8,8));
+    rBL = new QRectF(QPointF(0,0), QSizeF(8,8));
+    rBR = new QRectF(QPointF(0,0), QSizeF(8,8));
 }
 
 void HighLighter::setOptions(ItemProperties *prop)
@@ -28,7 +28,7 @@ void HighLighter::setOptions(ItemProperties *prop)
 
 QRectF HighLighter::boundingRect() const
 {
-    return QRectF(spoint,epoint);
+    return QRectF(startPoint, endPoint);
 }
 
 void HighLighter::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -47,14 +47,14 @@ QVariant HighLighter::itemChange(GraphicsItemChange change, const QVariant &valu
     }
 
     this->update();
-    return QGraphicsItem::itemChange(change,value);
+    return QGraphicsItem::itemChange(change, value);
 }
 
 void HighLighter::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->setPen(pen);
     painter->setBrush(brush);
-    painter->drawRect(QRectF(spoint,epoint).normalized());
+    painter->drawRect(QRectF(startPoint, endPoint).normalized());
 
     if(isSelected)
     {

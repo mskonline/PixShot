@@ -7,7 +7,7 @@
 #include <QList>
 #include <QMetaType>
 #include "gpixmap.h"
-#include "items/pixshotgraphicsitem.h"
+#include "items/abstractitem.h"
 #include "items/rectangle.h"
 #include "items/circle.h"
 #include "items/arrow.h"
@@ -45,7 +45,7 @@ public:
 
 private:
 
-    PixShotGraphicsItem *item;
+    AbstractItem *item;
     ItemProperties *prop;
     QFont textItemFont;
     QGraphicsTextItem *textItem;

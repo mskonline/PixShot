@@ -13,7 +13,8 @@ void RegionCaptureScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
     if(event->button() == Qt::LeftButton)
     {
         item = new RegionSelect(pixItem);
-        item->spoint = item->epoint = event->scenePos();
+        item->setStartPoint(event->scenePos());
+        item->setEndPoint(event->scenePos());
         item->update();
         this->update();
     }
@@ -34,7 +35,7 @@ void RegionCaptureScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->buttons() & Qt::LeftButton)
     {
-        item->epoint = event->scenePos();
+        item->setEndPoint(event->scenePos());
         this->update();
     }
     else

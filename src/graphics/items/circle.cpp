@@ -8,10 +8,10 @@ Circle::Circle(QGraphicsItem *parent)
     this->setParentItem(parent);
     this->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
 
-    rTL = new QRectF(QPointF(0,0),QSizeF(8,8));
-    rTR = new QRectF(QPointF(0,0),QSizeF(8,8));
-    rBL = new QRectF(QPointF(0,0),QSizeF(8,8));
-    rBR = new QRectF(QPointF(0,0),QSizeF(8,8));
+    rTL = new QRectF(QPointF(0,0), QSizeF(8,8));
+    rTR = new QRectF(QPointF(0,0), QSizeF(8,8));
+    rBL = new QRectF(QPointF(0,0), QSizeF(8,8));
+    rBR = new QRectF(QPointF(0,0), QSizeF(8,8));
 }
 
 void Circle::setOptions(ItemProperties *prop)
@@ -29,7 +29,7 @@ QPainterPath Circle::shape() const
 
 QRectF Circle::boundingRect() const
 {
-    return QRectF(spoint,epoint);
+    return QRectF(startPoint, endPoint);
 }
 
 void Circle::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -53,13 +53,13 @@ QVariant Circle::itemChange(GraphicsItemChange change, const QVariant &value)
     }
 
     this->update();
-    return QGraphicsItem::itemChange(change,value);
+    return QGraphicsItem::itemChange(change, value);
 }
 
 void Circle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 
-    QRectF rect = QRectF(spoint,epoint);
+    QRectF rect = QRectF(startPoint,endPoint);
     painter->setPen(pen);
     painter->setBrush(brush);
     painter->drawEllipse(rect.normalized());

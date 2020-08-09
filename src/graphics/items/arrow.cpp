@@ -8,8 +8,8 @@ Arrow::Arrow(QGraphicsItem *parent)
     this->setParentItem(parent);
     this->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
 
-    rT = new QRectF(QPointF(0,0),QSizeF(8,8));
-    rB = new QRectF(QPointF(0,0),QSizeF(8,8));
+    rT = new QRectF(QPointF(0,0), QSizeF(8,8));
+    rB = new QRectF(QPointF(0,0), QSizeF(8,8));
 }
 
 void Arrow::undo()
@@ -33,8 +33,8 @@ void Arrow::setOptions(ItemProperties *prop)
 
 /*QPainterPath Arrow::shape() const
 {
-    QPainterPath path(spoint);
-    path.lineTo(epoint);
+    QPainterPath path(startPoint);
+    path.lineTo(endPoint);
     path.addPolygon(arrowHead);
 
     return path;
@@ -43,8 +43,8 @@ void Arrow::setOptions(ItemProperties *prop)
 QRectF Arrow::boundingRect() const
 {
     qreal extra = (pn.width() + 20) / 2.0;
-    return QRectF(spoint, QSizeF(epoint.x() - spoint.x(),
-                     epoint.y() - spoint.y())).normalized()
+    return QRectF(startPoint, QSizeF(endPoint.x() - startPoint.x(),
+                     endPoint.y() - startPoint.y())).normalized()
     .adjusted(-extra, -extra, extra, extra);
 }
 
@@ -57,7 +57,7 @@ QVariant Arrow::itemChange(GraphicsItemChange change, const QVariant &value)
     }
 
     this->update();
-    return QGraphicsItem::itemChange(change,value);
+    return QGraphicsItem::itemChange(change, value);
 }
 
 /**
@@ -71,7 +71,7 @@ void Arrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
     painter->setPen(pen);
     painter->setBrush(brush);
     this->pn = pen;
-    QLineF line(spoint,epoint);
+    QLineF line(startPoint, endPoint);
     qreal arrowSize = 20;
 
     double angle = ::acos(line.dx() / line.length());
@@ -101,10 +101,10 @@ void Arrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
         painter->setPen(p);
         painter->setBrush(b);
 
-        rT->moveCenter(spoint);
+        rT->moveCenter(startPoint);
         painter->drawRect(*rT);
 
-        rB->moveCenter(epoint);
+        rB->moveCenter(endPoint);
         painter->drawRect(*rB);
     }
 

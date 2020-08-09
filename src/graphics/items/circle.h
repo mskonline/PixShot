@@ -7,19 +7,17 @@
 #include <QPainterPath>
 #include <QContextMenuEvent>
 
-#include "pixshotgraphicsitem.h"
+#include "abstractitem.h"
 
-class Circle : public PixShotGraphicsItem
+class Circle : public AbstractItem
 {
 private:
-
     QPen pen;
     QBrush brush;
     bool isSelected;
     QRectF *rTL, *rTR, *rBL, *rBR;
 
 public:
-
     Circle(QGraphicsItem *parent = 0);
     void setOptions(ItemProperties *prop);
     QPainterPath shape() const;
@@ -28,9 +26,8 @@ public:
     ~Circle();
 
 private:
-
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void contextMenuEvent(QContextMenuEvent *e);
+    void contextMenuEvent(QContextMenuEvent *event);
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 };
 #endif // CIRCLEITEM_H

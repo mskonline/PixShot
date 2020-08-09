@@ -5,13 +5,14 @@ QT += widgets network xml printsupport
 TARGET = PixShot
 TEMPLATE = app
 SOURCES += main.cpp \
+    graphics/items/abstractitem.cpp \
     graphics/items/arrow.cpp \
     graphics/items/circle.cpp \
     graphics/items/crop.cpp \
     graphics/items/highlighter.cpp \
-    graphics/items/pixshotgraphicsitem.cpp \
     graphics/items/rectangle.cpp \
     graphics/items/regionselect.cpp \
+    graphics/items/resizers.cpp \
     graphics/items/text.cpp \
     graphics/pixshotgraphicsscene.cpp \
     interface/interface.cpp \
@@ -33,13 +34,14 @@ HEADERS += interface/interface.h \
     constants/application.h \
     constants/preference.h \
     graphics/constants/graphics.h \
+    graphics/items/abstractitem.h \
     graphics/items/arrow.h \
     graphics/items/circle.h \
     graphics/items/crop.h \
     graphics/items/highlighter.h \
-    graphics/items/pixshotgraphicsitem.h \
     graphics/items/rectangle.h \
     graphics/items/regionselect.h \
+    graphics/items/resizers.h \
     graphics/items/text.h \
     graphics/pixshotgraphicsscene.h \
     interface/preferenceinterface.h \

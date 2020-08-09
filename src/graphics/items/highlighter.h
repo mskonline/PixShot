@@ -4,28 +4,25 @@
 #include <QBrush>
 #include <QPen>
 
-#include "pixshotgraphicsitem.h"
+#include "abstractitem.h"
 
-class HighLighter : public PixShotGraphicsItem
+class HighLighter : public AbstractItem
 {
 private:
-
     QPen pen;
     QBrush brush;
     bool isSelected;
     QRectF *rTL, *rTR, *rBL, *rBR;
 
-public:
+protected:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
+public:
     HighLighter(QGraphicsItem *parent = 0);
     void setOptions(ItemProperties *prop);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
-protected:
-
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 };
 
 #endif // HIGHLIGHTERITEM_H

@@ -4,17 +4,15 @@
 #include <QBrush>
 #include <QPen>
 
-#include "pixshotgraphicsitem.h"
+#include "abstractitem.h"
 
-class RegionSelect : public PixShotGraphicsItem
+class RegionSelect : public AbstractItem
 {
 private:
-
     QPen pen;
     QBrush brush;
 
 public:
-
     RegionSelect(QGraphicsItem *parent = 0);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

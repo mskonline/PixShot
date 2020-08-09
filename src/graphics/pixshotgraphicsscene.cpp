@@ -12,12 +12,12 @@
 #include <QGraphicsView>
 #include <QGraphicsTextItem>
 
-PixShotGraphicsScene::PixShotGraphicsScene(ItemProperties *prop)
+PixShotGraphicsScene::PixShotGraphicsScene(ItemProperties *itemProperties)
 {
     // Initialize
-    DRAW_MODE = false;
+    this->DRAW_MODE = false;
     this->OBJECT_TYPE = RECTANGLE;
-    this->prop = prop;
+    this->prop = itemProperties;
     this->item = nullptr;
     this->currentPix = nullptr;
     this->selectionMode = false;
@@ -33,7 +33,7 @@ PixShotGraphicsScene::PixShotGraphicsScene(ItemProperties *prop)
  */
 void PixShotGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if((event->button() == Qt::LeftButton) && DRAW_MODE)
+    if((event->button() == Qt::LeftButton) && this->DRAW_MODE)
     {
         currentPix->setModified(true);
         switch(this->OBJECT_TYPE)
@@ -68,15 +68,14 @@ void PixShotGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
         case CROP:
             item = new Crop(this,currentPix);
             Crop *t = dynamic_cast<Crop *> (item);
-            connect(t,SIGNAL(crop()),this,SLOT(cropImage()));
-            connect(t,SIGNAL(cancel()),this,SLOT(cancelCrop()));
+            connect(t, SIGNAL(crop()), this, SLOT(cropImage()));
+            connect(t, SIGNAL(cancel()), this, SLOT(cancelCrop()));
             break;
-
         }
 
         item->setOptions(this->prop);
-        item->spoint = event->scenePos();
-        item->epoint = event->scenePos();
+        item->setStartPoint(event->scenePos());
+        item->setEndPoint(event->scenePos());
 
         if(this->OBJECT_TYPE != CROP)
         {
@@ -93,14 +92,14 @@ void PixShotGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
         }
     }
 
-    if(this->items().size() > 0 && !DRAW_MODE)
+    if(this->items().size() > 0 && !this->DRAW_MODE)
     {
-        QList<QGraphicsItem *> itmList = this->selectedItems();
+        QList<QGraphicsItem *> itemsList = this->selectedItems();
         QGraphicsItem *item;
-        for(int i = 0; i < itmList.size(); ++i)
+        for(int i = 0; i < itemsList.size(); ++i)
         {
-            item = itmList.at(i);
-            item->setData(0,item->pos());
+            item = itemsList.at(i);
+            item->setData(0, item->pos());
         }
     }
 
@@ -116,18 +115,22 @@ void PixShotGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void PixShotGraphicsScene::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     if(!selectionMode)
+    {
         event->accept();
+    }
     else
+    {
         QGraphicsScene::mouseDoubleClickEvent(event);
+    }
 }
 
 void PixShotGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    if(DRAW_MODE)
+    if(this->DRAW_MODE)
     {
         /* One item at Once */
         if(this->OBJECT_TYPE == CROP){
-            DRAW_MODE = false;
+            this->DRAW_MODE = false;
             this->update();
 
             QGraphicsScene::mouseReleaseEvent(event);
@@ -136,12 +139,12 @@ void PixShotGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         }
     }
 
-    QList<QGraphicsItem *> itmList = this->selectedItems();
+    QList<QGraphicsItem *> itemsList = this->selectedItems();
     QGraphicsItem *item;
 
-    for(int i = 0; i < itmList.size(); ++i)
+    for(int i = 0; i < itemsList.size(); ++i)
     {
-        item = itmList.at(i);
+        item = itemsList.at(i);
         action = new GAction();
         action->item = item;
         action->action = MOVE;
@@ -155,13 +158,15 @@ void PixShotGraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 void PixShotGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    if((event->buttons() & Qt::LeftButton) && DRAW_MODE)
+    if((event->buttons() & Qt::LeftButton) && this->DRAW_MODE)
     {
         // TODO : better impl
         if(this->OBJECT_TYPE == TEXT)
+        {
             return;
+        }
 
-        item->epoint = event->scenePos();
+        item->setEndPoint(event->scenePos());
     }
 
     this->update();
@@ -177,7 +182,9 @@ void PixShotGraphicsScene::keyReleaseEvent(QKeyEvent *keyEvent)
     case Qt::Key_Return:
 
         if(this->OBJECT_TYPE == CROP)
+        {
             this->cropImage();
+        }
 
         break;
     case Qt::Key_Escape:
@@ -202,7 +209,9 @@ void PixShotGraphicsScene::keyReleaseEvent(QKeyEvent *keyEvent)
         currentPix->undoList->push(action);
 
         foreach(QGraphicsItem *item, this->selectedItems())
+        {
             item->hide();
+        }
 
         break;
     case Qt::Key_Control:
@@ -229,27 +238,28 @@ void PixShotGraphicsScene::keyReleaseEvent(QKeyEvent *keyEvent)
 
 void PixShotGraphicsScene::setPixmap(QPixmap pixmap)
 {
-    QSize pSize = pixmap.size();
-    int scaledWidth = pSize.width();
-    int scaledHeight = pSize.height();
+    QSize pixmapSize = pixmap.size();
+    int scaledWidth = pixmapSize.width();
+    int scaledHeight = pixmapSize.height();
     bool requiresScaling = false;
-
     QSize vSize = this->views().last()->size();
 
-    if(pSize.width() > vSize.width())
+    if(pixmapSize.width() > vSize.width())
     {
         requiresScaling = true;
         scaledWidth = vSize.width();
     }
 
-    if (pSize.height() > vSize.height())
+    if (pixmapSize.height() > vSize.height())
     {
         requiresScaling = true;
         scaledHeight = vSize.height();
     }
 
     if(currentPix)
+    {
         currentPix->setVisible(false);
+    }
 
     if(requiresScaling)
     {
@@ -262,12 +272,12 @@ void PixShotGraphicsScene::setPixmap(QPixmap pixmap)
     this->addItem(currentPix);
 }
 
-void PixShotGraphicsScene::setActivePixmap(int i)
+void PixShotGraphicsScene::setActivePixmap(int index)
 {
     if(currentPix)
     {
         currentPix->setVisible(false);
-        currentPix = pixList->at(i);
+        currentPix = pixList->at(index);
         currentPix->setVisible(true);
         this->setSceneRect(currentPix->boundingRect());
     }
@@ -285,7 +295,8 @@ void PixShotGraphicsScene::removePixmap(int index)
     pixList->removeAt(index);
 
     // Last pixmap is removed
-    if(pixList->count() == 0) {
+    if(pixList->count() == 0)
+    {
         // Reset the SceneRect
         this->setSceneRect(QRect(0, 0, 1, 1));
         return;
@@ -303,7 +314,6 @@ void PixShotGraphicsScene::undo()
     if(!currentPix->undoList->isEmpty())
     {
         GAction *gAction = currentPix->undoList->pop();
-
         QGraphicsItem *item = gAction->item;
         QVariant vt;
         int i;
@@ -354,7 +364,6 @@ void PixShotGraphicsScene::redo()
     if(!currentPix->redoList->isEmpty())
     {
         GAction *gAction = currentPix->redoList->pop();
-
         QGraphicsItem *item = gAction->item;
         QVariant vt;
         int i;
@@ -402,22 +411,21 @@ void PixShotGraphicsScene::redo()
 
 void PixShotGraphicsScene::renderToFile(QString path)
 {
-    QImage *img = new QImage(this->sceneRect().size().toSize(),
-                             QImage::Format_RGB32);
-    QPainter *painter = new QPainter(img);
+    QImage *image = new QImage(this->sceneRect().size().toSize(), QImage::Format_RGB32);
+    QPainter *painter = new QPainter(image);
 
     this->render(painter);
 
     painter->end();
     painter->save();
 
-    img->save(path);
+    image->save(path);
 
     currentPix->setSaved(true);
     currentPix->setModified(false);
     currentPix->notifiedChange = false;
 
-    delete img;
+    delete image;
     delete painter;
 }
 
@@ -458,17 +466,20 @@ void PixShotGraphicsScene::cropImage()
     currentPix->undoList->push(action);
 
     //Do Crop
-    Crop *t = dynamic_cast<Crop *> (item);
-    QRect rectf = QRect(t->spoint.toPoint(),t->epoint.toPoint());
+    Crop *crop = dynamic_cast<Crop *> (item);
+    QRect rectf = QRect(crop->getStartPoint().toPoint(), crop->getEndPoint().toPoint());
 
     QPixmap cropPic = currentPix->pixmap().copy(rectf);
     currentPix->setPixmap(cropPic);
     this->setSceneRect(currentPix->boundingRect());
 
-    this->removeItem(t->panel);
-    this->removeItem(t);
+    this->removeItem(crop->panel);
+    this->removeItem(crop);
 
-    if(t) delete t;
+    if(crop)
+    {
+        delete crop;
+    }
 
     emit resetCursor();
 
@@ -482,7 +493,7 @@ void PixShotGraphicsScene::cancelCrop()
     this->removeItem(t);
     this->removeItem(t->panel);
 
-    DRAW_MODE = true;
+    this->DRAW_MODE = true;
 }
 
 bool PixShotGraphicsScene::checkForAllSaved()
@@ -490,18 +501,24 @@ bool PixShotGraphicsScene::checkForAllSaved()
     int pixCount = this->pixList->count();
 
     if(pixCount == 0)
+    {
         return true;
+    }
 
-    GPixMap *p;
+    GPixMap *pixmap;
 
     for(int i = 0; i < pixCount; ++i)
     {
-        p = this->pixList->at(i);
+        pixmap = this->pixList->at(i);
 
-        if(p->isSaved())
+        if(pixmap->isSaved())
+        {
             continue;
+        }
         else
+        {
             return false;
+        }
     }
 
     return true;
@@ -509,16 +526,19 @@ bool PixShotGraphicsScene::checkForAllSaved()
 
 void PixShotGraphicsScene::clearObjects()
 {
-    QList<QGraphicsItem *> itemList = this->currentPix->childItems();
+    QList<QGraphicsItem *> itemsList = this->currentPix->childItems();
     int index;
-    for(index = 0 ; index < itemList.size() ; ++index)
+
+    for(index = 0 ; index < itemsList.size() ; ++index)
+    {
         itemList.at(index)->hide();
+    }
 
-    GAction *a = new GAction();
-    a->action = DELETE_ALL;
-    a->vt.setValue(index);
+    GAction *action = new GAction();
+    action->action = DELETE_ALL;
+    action->vt.setValue(index);
 
-    this->currentPix->undoList->push(a);
+    this->currentPix->undoList->push(action);
 }
 
 
@@ -535,15 +555,21 @@ int PixShotGraphicsScene::pixmapCount()
 qreal PixShotGraphicsScene::getPixScale()
 {
     if(currentPix)
+    {
         return currentPix->scale;
-    else // When opening the first pix
+    }
+    else
+    {// When opening the first pix
         return 1;
+    }
 }
 
 void PixShotGraphicsScene::setPixScale(qreal s)
 {
     if(currentPix)
+    {
         currentPix->scale = s;
+    }
 }
 
 int PixShotGraphicsScene::getZoomStep()
@@ -562,7 +588,9 @@ int PixShotGraphicsScene::getZoomStep()
 void PixShotGraphicsScene::setZoomStep(int zStep)
 {
     if(currentPix)
+    {
         currentPix->zoomStep = zStep;
+    }
 }
 
 void PixShotGraphicsScene::setSelectionMode(bool m)

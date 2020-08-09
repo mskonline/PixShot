@@ -1,6 +1,8 @@
 #include "rectangle.h"
 #include <QPainter>
 #include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsSceneHoverEvent>
 #include <QDebug>
 
 Rectangle::Rectangle(QGraphicsItem *parent)
@@ -8,11 +10,12 @@ Rectangle::Rectangle(QGraphicsItem *parent)
 {
     this->setParentItem(parent);
     this->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable);
+    this->setAcceptHoverEvents(true);
 
-    rTL = new QRectF(QPointF(0,0),QSizeF(8,8));
-    rTR = new QRectF(QPointF(0,0),QSizeF(8,8));
-    rBL = new QRectF(QPointF(0,0),QSizeF(8,8));
-    rBR = new QRectF(QPointF(0,0),QSizeF(8,8));
+    rTL = new QRectF(QPointF(0,0), QSizeF(8,8));
+    rTR = new QRectF(QPointF(0,0), QSizeF(8,8));
+    rBL = new QRectF(QPointF(0,0), QSizeF(8,8));
+    rBR = new QRectF(QPointF(0,0), QSizeF(8,8));
 }
 
 void Rectangle::setOptions(ItemProperties *prop)
@@ -30,15 +33,26 @@ QPainterPath Rectangle::shape() const
 
 QRectF Rectangle::boundingRect() const
 {
-    return QRectF(spoint,epoint);
+    return QRectF(startPoint, endPoint);
 }
 
 void Rectangle::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    /* Draw mini boxes around the rectangle */
-
     isSelected = true;
+    this->setCursor(Qt::SizeAllCursor);
     this->update();
+}
+
+void Rectangle::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+    if(isSelected)
+        this->setCursor(Qt::SizeAllCursor);
+}
+
+void Rectangle::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
+    if(isSelected)
+        this->unsetCursor();
 }
 
 void Rectangle::contextMenuEvent(QContextMenuEvent *e)
@@ -65,7 +79,7 @@ void Rectangle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
 {
     painter->setPen(pen);
     painter->setBrush(brush);
-    painter->drawRect(QRectF(spoint,epoint).normalized());
+    painter->drawRect(QRectF(startPoint, endPoint).normalized());
 
     if(isSelected)
     {

@@ -5,12 +5,11 @@
 #include <QBrush>
 #include <QPen>
 #include <math.h>
-#include "pixshotgraphicsitem.h"
+#include "abstractitem.h"
 
-class Arrow : public PixShotGraphicsItem
+class Arrow : public AbstractItem
 {
 private:
-
     QPolygonF arrowHead;
     QPen pn;
     QPen pen;
@@ -20,16 +19,13 @@ private:
     QPointF arrowP1, arrowP2;
 
 public:
-
     Arrow(QGraphicsItem *parent = 0);
     void undo();
     void redo();
     void setOptions(ItemProperties *prop);
     QRectF boundingRect() const;
-    //QPainterPath shape() const;
 
 protected:
-
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 };

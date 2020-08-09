@@ -34,9 +34,7 @@ Interface::Interface(Preferences *preferences)
 
     zoomStep = 1;
     c_zoom = 1;
-
     isCtrlPressed = false;
-
     nPixWidget = nullptr;
     sysTrayIcon = nullptr;
     actionWidget = nullptr;
@@ -47,7 +45,9 @@ Interface::Interface(Preferences *preferences)
     setUpActions();
 
     if(preferences->trayIcon)
+    {
         setUpTrayIcon();
+    }
 
     setConnections();
 
@@ -804,13 +804,15 @@ void Interface::setActivePixmap(int i)
     QMatrix matrix;
 
     // return when last tab is closed
-    if(i == -1) {
+    if(i == -1)
+    {
         this->c_zoom = 1;
-    } else {
+    }
+    else
+    {
         // Save Zoom State
         pixShotGraphicsScene->setPixScale(c_zoom);
         pixShotGraphicsScene->setZoomStep(zoomStep);
-
         pixShotGraphicsScene->setActivePixmap(i);
 
         this->zoomStep = pixShotGraphicsScene->getZoomStep();
@@ -877,8 +879,8 @@ void Interface::checkForUpdates()
 
 void Interface::openWebsite()
 {
-    QDesktopServices dServices;
-    bool status = dServices.openUrl(QUrl(WEBSITE));
+    QDesktopServices desktopService;
+    bool status = desktopService.openUrl(QUrl(WEBSITE));
 
     if(!status)
         this->report(ERROR,"Some problem has occurred while opening the site. please try again.");
@@ -886,8 +888,8 @@ void Interface::openWebsite()
 
 void Interface::showAbout()
 {
-    About *abt = new About(this);
-    abt->show();
+    About *about = new About(this);
+    about->show();
 }
 
 void Interface::aboutQt()
@@ -918,12 +920,15 @@ void Interface::closeEvent(QCloseEvent *e)
         e->ignore();
     }
     else
+    {
         emit closeApp();
+    }
 }
 
 Interface::~Interface()
 {
-    if(sysTrayIcon){
+    if(sysTrayIcon)
+    {
         sysTrayIcon->hide();
         delete sysTrayIcon;
     }

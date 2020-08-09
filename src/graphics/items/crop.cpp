@@ -7,9 +7,9 @@ Crop::Crop(QGraphicsScene *scene, QGraphicsItem *parent)
     this->setParentItem(parent);
     this->setPos(0,0);
 
-    startPoint.setX(0);
-    startPoint.setY(0);
-    endPoint = parent->boundingRect().bottomRight();
+    cropStartPoint.setX(0);
+    cropStartPoint.setY(0);
+    cropEndPoint = parent->boundingRect().bottomRight();
 
     this->setOpacity(0.5);
     this->setZValue(parent->zValue() + 1);
@@ -41,7 +41,7 @@ void Crop::setOptions(ItemProperties *prop)
 
 QRectF Crop::boundingRect() const
 {
-    return QRectF(startPoint,endPoint);
+    return QRectF(cropStartPoint, cropEndPoint);
 }
 
 void Crop::createTool()
@@ -71,11 +71,11 @@ void Crop::createTool()
     pb_cancel->setIcon(icon1);
     pb_cancel->setIconSize(QSize(14, 16));
 
-    connect(pb_crop,SIGNAL(pressed()),this,SLOT(emitCrop()));
-    connect(pb_cancel,SIGNAL(pressed()),this,SLOT(emitCancel()));
+    connect(pb_crop, SIGNAL(pressed()), this, SLOT(emitCrop()));
+    connect(pb_cancel, SIGNAL(pressed()), this, SLOT(emitCancel()));
 
     panel = scene->addWidget(Form);
-    panel->setPos(epoint);
+    panel->setPos(cropEndPoint);
     panel->setZValue(this->zValue() + 10);
 }
 
@@ -109,29 +109,29 @@ void Crop::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
      */
 
     // Rect 1
-    QPointF p2(endPoint.x(),spoint.y());
-    painter->drawRect(QRectF(pixTop,p2).normalized());
+    QPointF p2(cropEndPoint.x(), startPoint.y());
+    painter->drawRect(QRectF(pixTop, p2).normalized());
 
     // Rect 2
-    QPointF p3(0,spoint.y());
-    QPointF p4(spoint.x(),epoint.y());
-    painter->drawRect(QRectF(p3,p4).normalized());
+    QPointF p3(0, startPoint.y());
+    QPointF p4(startPoint.x(), endPoint.y());
+    painter->drawRect(QRectF(p3, p4).normalized());
 
     // Rect 3
-    QPointF p5(epoint.x(),spoint.y());
-    QPointF p6(endPoint.x(),epoint.y());
-    painter->drawRect(QRectF(p5,p6).normalized());
+    QPointF p5(endPoint.x(), startPoint.y());
+    QPointF p6(cropEndPoint.x(), endPoint.y());
+    painter->drawRect(QRectF(p5, p6).normalized());
 
     // Rect 4
-    QPointF p7(0,epoint.y());
-    painter->drawRect(QRectF(p7,endPoint).normalized());
+    QPointF p7(0, endPoint.y());
+    painter->drawRect(QRectF(p7, cropEndPoint).normalized());
 
     // Draw selection Rect
     painter->setPen(selectionPen);
     painter->setBrush(selectionBrush);
-    painter->drawRect(QRectF(spoint,epoint).normalized());
+    painter->drawRect(QRectF(startPoint, endPoint).normalized());
 
-    panel->setPos(epoint);
+    panel->setPos(endPoint);
 }
 
 Crop::~Crop()

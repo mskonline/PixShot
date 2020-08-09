@@ -13,30 +13,25 @@ class RegionCaptureScene : public QGraphicsScene
     Q_OBJECT
 private:
 
-    PixShotGraphicsItem *item;
+    RegionSelect *item;
     QGraphicsPixmapItem *pixItem;
-
 public:
 
     QPixmap regionPix;
     RegionCaptureScene(QPixmap pix);
     ~RegionCaptureScene();
-
 protected:
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void keyReleaseEvent(QKeyEvent *keyEvent);
-
 signals:
 
     void closeView();
-
 public slots:
 
     void captureRegion();
-
 };
 
 #endif // REGIONCAPTURESCENE_H
