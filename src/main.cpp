@@ -1,8 +1,6 @@
 #include "pixshot.h"
 #include "commons/commons.h"
 
-#include <QSharedMemory>
-
 #define NORMAL_RUN 0
 #define ABNORMAL_RUN -1
 
